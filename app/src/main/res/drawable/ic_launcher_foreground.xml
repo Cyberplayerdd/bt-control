@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A remote control sending wireless waves. The pad and buttons are cut out of the remote
+     (even-odd fill) so the same drawable works as the themed/monochrome icon.
+     Drawn on the 108dp adaptive-icon grid, kept inside the 66dp safe zone. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group
+        android:pivotX="54"
+        android:pivotY="54"
+        android:rotation="-20">
+        <!-- Remote body with navigation ring and four buttons cut out -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:fillType="evenOdd"
+            android:pathData="M51.5,40 h5 a8,8 0 0 1 8,8 v28 a8,8 0 0 1 -8,8 h-5 a8,8 0 0 1 -8,-8 v-28 a8,8 0 0 1 8,-8 z
+                M47.3,52 a6.7,6.7 0 1,0 13.4,0 a6.7,6.7 0 1,0 -13.4,0 z
+                M47.8,64 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 z
+                M55.8,64 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 z
+                M47.8,71.5 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 z
+                M55.8,71.5 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 z" />
+        <!-- OK button in the middle of the pad -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M51.4,52 a2.6,2.6 0 1,0 5.2,0 a2.6,2.6 0 1,0 -5.2,0 z" />
+        <!-- Signal waves -->
+        <path
+            android:fillColor="#00000000"
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="3"
+            android:strokeLineCap="round"
+            android:pathData="M49.76,32.76 A6,6 0 0 1 58.24,32.76" />
+        <path
+            android:fillColor="#00000000"
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="3"
+            android:strokeLineCap="round"
+            android:pathData="M46.22,29.22 A11,11 0 0 1 61.78,29.22" />
+    </group>
+</vector>
