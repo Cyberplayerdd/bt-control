@@ -86,7 +86,7 @@ fun SettingsScreen() {
             ),
         ) { v -> set { it.copy(presentationKeys = v) } }
         SwitchRow(t(R.string.volume_buttons_change_slides), s.presentationVolumeKeys) { v -> set { it.copy(presentationVolumeKeys = v) } }
-        SliderRow(t(R.string.vibrate_after), s.presentationAlertMinutes.toFloat(), 0f..90f, { if (it < 1f) "off" else "${it.roundToInt()} min" }, steps = 17) { v ->
+        SliderRow(t(R.string.vibrate_after), s.presentationAlertMinutes.toFloat(), 0f..90f, { if (it < 1f) t(R.string.off) else "${it.roundToInt()} min" }, steps = 17) { v ->
             set { it.copy(presentationAlertMinutes = v.roundToInt()) }
         }
 
@@ -154,6 +154,13 @@ fun SettingsScreen() {
             t(R.string.report_interval), s.reportIntervalMs.toFloat(), 4f..20f, { "${it.roundToInt()} ms (${(1000f / it).roundToInt()} Hz)" }, steps = 15,
             subtitle = t(R.string.mouse_pen_and_gamepad_update_rate_lower_sm),
         ) { v -> set { it.copy(reportIntervalMs = v.roundToInt()) } }
+
+        SectionHeader(t(R.string.diagnostic_log))
+        SwitchRow(t(R.string.keep_a_diagnostic_log), s.diagnosticLog, t(R.string.diagnostic_log_summary)) { v ->
+            set { it.copy(diagnosticLog = v) }
+            com.btcontrol.app.log.AppLog.enabled = v
+        }
+        com.btcontrol.app.ui.components.DiagnosticLogActions()
 
         SectionHeader(t(R.string.about))
         Text(

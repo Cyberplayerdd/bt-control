@@ -38,10 +38,12 @@ fun KeyboardScreen() {
     val size = settings.keyboardSize
 
     Column(Modifier.fillMaxSize().padding(horizontal = 6.dp).navigationBarsPadding()) {
-        Row(
-            Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(vertical = 2.dp),
+        // Wraps to a second line on narrow screens / long translations instead of cutting the last chip.
+        @OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
+        androidx.compose.foundation.layout.FlowRow(
+            Modifier.fillMaxWidth().padding(vertical = 2.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),
-            verticalAlignment = Alignment.CenterVertically,
+            itemVerticalAlignment = Alignment.CenterVertically,
         ) {
             for ((id, label) in KeyboardSizes.ALL) {
                 FilterChip(

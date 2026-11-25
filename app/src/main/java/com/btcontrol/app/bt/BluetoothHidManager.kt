@@ -19,8 +19,8 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.core.content.ContextCompat
+import com.btcontrol.app.log.AppLog
 import com.btcontrol.app.data.AppSettings
 import com.btcontrol.app.hid.HidController
 import com.btcontrol.app.hid.HidDescriptor
@@ -81,8 +81,22 @@ class BluetoothHidManager(
     private var proxyRequested = false
     private var pendingConnectAddress: String? = null
 
-    private val _state = MutableStateFlow(HidState(HidStatus.STARTING))
-    val state: StateFlow<HidState> = _state.asStateFlow()
+    private val stateFlow = MutableStateFlow(HidState(HidStatus.STARTING))
+    val state: StateFlow<HidState> = stateFlow.asStateFlow()
+
+    /** Every status change goes through here so it is logged (anonymous device id, no name). */
+    private val _state = object {
+        var value: HidState
+            get() = stateFlow.value
+            set(v) {
+                val old = stateFlow.value
+                stateFlow.value = v
+                if (old.status != v.status || old.deviceAddress != v.deviceAddress) {
+                    AppLog.i("bt", "status ${old.status} -> ${v.status}" +
+                        (v.deviceAddress?.let { " (${AppLog.device(it)})" } ?: ""))
+                }
+            }
+    }
 
     private val _bonded = MutableStateFlow<List<BtDeviceInfo>>(emptyList())
     val bondedDevices: StateFlow<List<BtDeviceInfo>> = _bonded.asStateFlow()
@@ -134,6 +148,7 @@ class BluetoothHidManager(
         if (hidDevice == null && !proxyRequested) {
             _state.value = HidState(HidStatus.STARTING)
             proxyRequested = adapter.getProfileProxy(context, serviceListener, BluetoothProfile.HID_DEVICE)
+            AppLog.i("bt", "HID Device profile requested: $proxyRequested")
             if (!proxyRequested) {
                 _state.value = HidState(HidStatus.UNSUPPORTED, message = t(R.string.this_phone_does_not_expose_the_bluetooth_h))
             }
@@ -144,6 +159,7 @@ class BluetoothHidManager(
 
     /** Unregister and release everything (used by "Quit"). */
     fun stop() {
+        AppLog.i("bt", "stop (quit)")
         started = false
         runCatching { if (_discovering.value) adapter?.cancelDiscovery() }
         disconnect()
@@ -166,6 +182,7 @@ class BluetoothHidManager(
     private val serviceListener = object : BluetoothProfile.ServiceListener {
         override fun onServiceConnected(profile: Int, proxy: BluetoothProfile) {
             if (profile != BluetoothProfile.HID_DEVICE) return
+            AppLog.i("bt", "HID Device profile connected")
             hidDevice = proxy as BluetoothHidDevice
             proxyRequested = false
             registerApp()
@@ -173,6 +190,7 @@ class BluetoothHidManager(
 
         override fun onServiceDisconnected(profile: Int) {
             if (profile != BluetoothProfile.HID_DEVICE) return
+            AppLog.w("bt", "HID Device profile disconnected")
             hidDevice = null
             registered = false
             proxyRequested = false
@@ -192,8 +210,9 @@ class BluetoothHidManager(
         )
         _state.value = HidState(HidStatus.STARTING, message = t(R.string.registering_hid_device))
         val ok = runCatching { h.registerApp(sdp, null, null, executor, callback) }.getOrElse {
-            Log.e(TAG, "registerApp threw", it); false
+            AppLog.e("bt", "registerApp threw", it); false
         }
+        AppLog.i("bt", "registerApp (descriptor ${HidDescriptor.DESCRIPTOR.size} bytes) -> $ok")
         if (!ok) {
             _state.value = HidState(
                 HidStatus.REGISTRATION_FAILED,
@@ -204,7 +223,8 @@ class BluetoothHidManager(
 
     private val callback = object : BluetoothHidDevice.Callback() {
         override fun onAppStatusChanged(pluggedDevice: BluetoothDevice?, registered: Boolean) {
-            Log.i(TAG, "onAppStatusChanged registered=$registered plugged=${pluggedDevice?.address}")
+            AppLog.i("bt", "app status: registered=$registered" +
+                (pluggedDevice?.let { ", last computer ${AppLog.device(it.address)}" } ?: ""))
             this@BluetoothHidManager.registered = registered
             if (!registered) {
                 setDisconnected()
@@ -232,12 +252,21 @@ class BluetoothHidManager(
             // The computer usually reconnects by itself; only call it if it hasn't after a moment
             // (both sides connecting at once makes Android show "Can't connect").
             if (target != null) main.postDelayed({
-                if (connectedDevice == null && _state.value.status == HidStatus.READY) connect(target)
+                if (connectedDevice == null && _state.value.status == HidStatus.READY) {
+                    AppLog.i("bt", if (pending != null) "connecting to the chosen computer" else "auto-reconnect to the last computer")
+                    connect(target)
+                }
             }, if (pending != null) 0L else 2500L)
         }
 
         override fun onConnectionStateChanged(device: BluetoothDevice, state: Int) {
-            Log.i(TAG, "onConnectionStateChanged ${device.address} state=$state")
+            AppLog.i("bt", "connection ${AppLog.device(device.address)}: " + when (state) {
+                BluetoothProfile.STATE_CONNECTED -> "connected"
+                BluetoothProfile.STATE_CONNECTING -> "connecting"
+                BluetoothProfile.STATE_DISCONNECTING -> "disconnecting"
+                BluetoothProfile.STATE_DISCONNECTED -> "disconnected"
+                else -> "state $state"
+            } + " (${kindOf(device)})")
             when (state) {
                 BluetoothProfile.STATE_CONNECTED -> onConnected(device)
                 BluetoothProfile.STATE_CONNECTING ->
@@ -253,6 +282,7 @@ class BluetoothHidManager(
 
         override fun onGetReport(device: BluetoothDevice, type: Byte, id: Byte, bufferSize: Int) {
             val h = hidDevice ?: return
+            AppLog.i("bt", "computer asked for report type=$type id=$id")
             val len = HidDescriptor.inputReportLength(id.toInt())
             if (type == BluetoothHidDevice.REPORT_TYPE_INPUT && len > 0) {
                 h.replyReport(device, type, id, ByteArray(len))
@@ -273,7 +303,7 @@ class BluetoothHidManager(
         }
 
         override fun onVirtualCableUnplug(device: BluetoothDevice) {
-            Log.i(TAG, "Virtual cable unplug from ${device.address}")
+            AppLog.i("bt", "virtual cable unplug from ${AppLog.device(device.address)}")
             setDisconnected()
             if (registered) _state.value = HidState(HidStatus.READY)
         }
@@ -321,7 +351,8 @@ class BluetoothHidManager(
         }
         connectedDevice?.let { if (it.address != device.address) runCatching { h.disconnect(it) } }
         _state.value = HidState(HidStatus.CONNECTING, nameOf(device), device.address)
-        val ok = runCatching { h.connect(device) }.getOrDefault(false)
+        val ok = runCatching { h.connect(device) }.getOrElse { AppLog.w("bt", "connect threw", it); false }
+        AppLog.i("bt", "connect ${AppLog.device(device.address)} (${kindOf(device)}) -> $ok")
         if (!ok) {
             _state.value = HidState(HidStatus.READY, message = t(R.string.could_not_connect_to, nameOf(device)))
         }
@@ -334,11 +365,13 @@ class BluetoothHidManager(
 
     fun disconnect() {
         val d = connectedDevice ?: return
+        AppLog.i("bt", "disconnect requested")
         runCatching { hidDevice?.disconnect(d) }
     }
 
     /** Release HID registration and register again (fixes "stuck" states). */
     fun reRegister() {
+        AppLog.i("bt", "restart HID requested")
         val h = hidDevice
         disconnect()
         if (h != null) {
@@ -351,7 +384,19 @@ class BluetoothHidManager(
     // ------------------------------------------------------------------ devices
 
     private fun nameOf(d: BluetoothDevice): String =
-        runCatching { (if (Build.VERSION.SDK_INT >= 30) d.alias else null) ?: d.name }.getOrNull() ?: d.address
+        runCatching { (if (Build.VERSION.SDK_INT >= 30) d.alias else null) ?: d.name }.getOrNull()
+            ?.also { AppLog.addSensitive(it) } ?: d.address
+
+    /** Kind of device for the log (never its name). */
+    private fun kindOf(d: BluetoothDevice): String =
+        when (runCatching { d.bluetoothClass?.majorDeviceClass }.getOrNull()) {
+            BluetoothClass.Device.Major.COMPUTER -> "computer"
+            BluetoothClass.Device.Major.PHONE -> "phone"
+            BluetoothClass.Device.Major.AUDIO_VIDEO -> "audio/video"
+            BluetoothClass.Device.Major.PERIPHERAL -> "peripheral"
+            null -> "unknown class"
+            else -> "other class"
+        }
 
     private fun info(d: BluetoothDevice): BtDeviceInfo {
         val cls = runCatching { d.bluetoothClass?.majorDeviceClass }.getOrNull()
@@ -366,7 +411,11 @@ class BluetoothHidManager(
 
     fun refreshBonded() {
         if (!hasConnectPermission()) return
+        runCatching { AppLog.addSensitive(adapter?.name) }
         val list = runCatching { adapter?.bondedDevices?.map { info(it) } }.getOrNull().orEmpty()
+        if (list.size != _bonded.value.size) {
+            AppLog.i("bt", "paired devices: ${list.size} (${list.count { it.isComputer }} computers)")
+        }
         _bonded.value = list.sortedWith(compareByDescending<BtDeviceInfo> { it.isComputer }.thenBy { it.name.lowercase() })
     }
 
@@ -376,6 +425,7 @@ class BluetoothHidManager(
         _discovered.value = emptyList()
         if (a.isDiscovering) a.cancelDiscovery()
         val ok = runCatching { a.startDiscovery() }.getOrDefault(false)
+        AppLog.i("bt", "search for devices -> $ok")
         _discovering.value = ok
         return ok
     }
@@ -393,11 +443,13 @@ class BluetoothHidManager(
             return
         }
         pendingConnectAddress = device.address
-        runCatching { device.createBond() }
+        val ok = runCatching { device.createBond() }.getOrDefault(false)
+        AppLog.i("bt", "pairing requested with ${AppLog.device(device.address)} (${kindOf(device)}) -> $ok")
     }
 
     /** Forget a pairing on the phone side (hidden API, best effort). */
     fun unpair(device: BluetoothDevice) {
+        AppLog.i("bt", "forget ${AppLog.device(device.address)}")
         runCatching {
             device.javaClass.getMethod("removeBond").invoke(device)
         }
@@ -408,7 +460,11 @@ class BluetoothHidManager(
         override fun onReceive(c: Context, intent: Intent) {
             when (intent.action) {
                 BluetoothAdapter.ACTION_STATE_CHANGED -> {
-                    when (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR)) {
+                    val st = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR)
+                    if (st == BluetoothAdapter.STATE_ON || st == BluetoothAdapter.STATE_OFF) {
+                        AppLog.i("bt", "Bluetooth turned " + if (st == BluetoothAdapter.STATE_ON) "on" else "off")
+                    }
+                    when (st) {
                         BluetoothAdapter.STATE_ON -> if (started) start()
                         BluetoothAdapter.STATE_TURNING_OFF, BluetoothAdapter.STATE_OFF -> {
                             setDisconnected()
@@ -437,6 +493,11 @@ class BluetoothHidManager(
                     refreshBonded()
                     val d = deviceExtra(intent) ?: return
                     val st = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.BOND_NONE)
+                    AppLog.i("bt", "pairing ${AppLog.device(d.address)}: " + when (st) {
+                        BluetoothDevice.BOND_BONDED -> "paired"
+                        BluetoothDevice.BOND_BONDING -> "pairing…"
+                        else -> "not paired"
+                    })
                     if (st == BluetoothDevice.BOND_BONDED && d.address == pendingConnectAddress) {
                         pendingConnectAddress = null
                         // Give the computer a moment to finish service discovery.
@@ -464,9 +525,5 @@ class BluetoothHidManager(
         }
         ContextCompat.registerReceiver(context, receiver, f, ContextCompat.RECEIVER_EXPORTED)
         receiversRegistered = true
-    }
-
-    private companion object {
-        const val TAG = "BtHid"
     }
 }

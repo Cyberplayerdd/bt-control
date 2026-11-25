@@ -65,6 +65,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
+        com.btcontrol.app.log.AppLog.i("app", "in foreground")
         handler.removeCallbacks(stopRunnable)
         if (app.bt.hasConnectPermission()) {
             app.bt.start()
@@ -74,6 +75,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onStop() {
         super.onStop()
+        if (!isChangingConfigurations) com.btcontrol.app.log.AppLog.i("app", "in background")
         if (!isChangingConfigurations && !app.settings.value.keepInBackground) {
             handler.postDelayed(stopRunnable, 4000)
         }

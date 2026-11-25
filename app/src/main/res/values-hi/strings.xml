@@ -394,6 +394,15 @@
     <string name="pan">पैन</string>
     <string name="size">आकार −</string>
     <string name="size_2">आकार +</string>
+    <string name="diagnostic_log">डायग्नोस्टिक लॉग</string>
+    <string name="keep_a_diagnostic_log">डायग्नोस्टिक लॉग रखें</string>
+    <string name="diagnostic_log_summary">यह इसी डिवाइस पर रहता है और कभी अपने-आप नहीं भेजा जाता। गुमनाम: डिवाइस के नाम, ब्लूटूथ पते, टाइप किया गया टेक्स्ट या कुंजियाँ नहीं — सिर्फ़ घटनाएँ और गिनती। पिछले 3 सत्र, हर एक अधिकतम 256 KB।</string>
+    <string name="view_log">लॉग देखें</string>
+    <string name="share_log">लॉग शेयर करें</string>
+    <string name="delete_logs">लॉग हटाएँ</string>
+    <string name="delete_logs_confirm">सभी डायग्नोस्टिक लॉग हटाएँ?</string>
+    <string name="log_empty">लॉग खाली है।</string>
+    <string name="logs_deleted">लॉग हटा दिए गए</string>
     <plurals name="imported_layouts">
         <item quantity="one">%1$d लेआउट इंपोर्ट किया गया</item>
         <item quantity="other">%1$d लेआउट इंपोर्ट किए गए</item>

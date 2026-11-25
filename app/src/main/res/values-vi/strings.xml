@@ -394,6 +394,15 @@
     <string name="pan">Kéo</string>
     <string name="size">Cỡ −</string>
     <string name="size_2">Cỡ +</string>
+    <string name="diagnostic_log">Nhật ký chẩn đoán</string>
+    <string name="keep_a_diagnostic_log">Ghi nhật ký chẩn đoán</string>
+    <string name="diagnostic_log_summary">Chỉ lưu trên thiết bị này và không bao giờ tự động gửi đi. Đã ẩn danh: không có tên thiết bị, địa chỉ Bluetooth, văn bản đã gõ hay phím — chỉ có sự kiện và số lần. 3 phiên gần nhất, tối đa 256 KB mỗi phiên.</string>
+    <string name="view_log">Xem nhật ký</string>
+    <string name="share_log">Chia sẻ nhật ký</string>
+    <string name="delete_logs">Xóa nhật ký</string>
+    <string name="delete_logs_confirm">Xóa tất cả nhật ký chẩn đoán?</string>
+    <string name="log_empty">Nhật ký trống.</string>
+    <string name="logs_deleted">Đã xóa nhật ký</string>
     <plurals name="imported_layouts">
         <item quantity="other">Đã nhập %1$d bố cục</item>
     </plurals>

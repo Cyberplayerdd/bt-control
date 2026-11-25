@@ -20,6 +20,7 @@ class BtControlApp : Application() {
         super.onCreate()
         instance = this
         settings = AppSettings(this)
+        com.btcontrol.app.log.AppLog.init(this, settings.value.diagnosticLog, settings.nonDefaultSummary())
         bt = BluetoothHidManager(this, settings)
         layouts = LayoutRepository(this)
         com.btcontrol.app.ui.components.GyroCalibration.load(settings.value)

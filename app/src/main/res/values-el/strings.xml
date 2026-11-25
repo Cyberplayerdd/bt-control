@@ -394,6 +394,15 @@
     <string name="pan">Μετακίνηση</string>
     <string name="size">Μέγεθος −</string>
     <string name="size_2">Μέγεθος +</string>
+    <string name="diagnostic_log">Αρχείο διάγνωσης</string>
+    <string name="keep_a_diagnostic_log">Τήρηση αρχείου διάγνωσης</string>
+    <string name="diagnostic_log_summary">Μένει σε αυτή τη συσκευή και δεν αποστέλλεται ποτέ αυτόματα. Ανώνυμο: χωρίς ονόματα συσκευών, διευθύνσεις Bluetooth, πληκτρολογημένο κείμενο ή πλήκτρα — μόνο συμβάντα και μετρήσεις. Τελευταίες 3 συνεδρίες, έως 256 KB η καθεμία.</string>
+    <string name="view_log">Προβολή αρχείου</string>
+    <string name="share_log">Κοινοποίηση αρχείου</string>
+    <string name="delete_logs">Διαγραφή αρχείων</string>
+    <string name="delete_logs_confirm">Διαγραφή όλων των αρχείων διάγνωσης;</string>
+    <string name="log_empty">Το αρχείο είναι κενό.</string>
+    <string name="logs_deleted">Τα αρχεία διαγράφηκαν</string>
     <plurals name="imported_layouts">
         <item quantity="one">Εισήχθη %1$d διάταξη</item>
         <item quantity="other">Εισήχθησαν %1$d διατάξεις</item>

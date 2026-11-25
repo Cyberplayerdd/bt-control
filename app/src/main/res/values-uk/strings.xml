@@ -81,9 +81,9 @@
     <string name="play_pause">Відтворити / Пауза</string>
     <string name="mute">Без звуку</string>
     <string name="volume">Гучність +</string>
-    <string name="prev">Попер.</string>
+    <string name="prev">Назад</string>
     <string name="volume_2">Гучність −</string>
-    <string name="next">Наст.</string>
+    <string name="next">Далі</string>
     <string name="exit_fullscreen">Вийти з повноекранного</string>
     <string name="web_browser">Веб-браузер</string>
     <string name="back">Назад</string>
@@ -132,7 +132,7 @@
     <string name="auto_rotate">Автоповорот</string>
     <string name="controls">Керування</string>
     <string name="custom_layouts">Власні розкладки</string>
-    <string name="configuration">Налаштування</string>
+    <string name="configuration">Конфігурація</string>
     <string name="about_help">Про застосунок і довідка</string>
     <string name="not_connected">Не підключено</string>
     <string name="bluetooth_permission_needed">Потрібен дозвіл Bluetooth</string>
@@ -394,6 +394,15 @@
     <string name="pan">Зсув</string>
     <string name="size">Розмір −</string>
     <string name="size_2">Розмір +</string>
+    <string name="diagnostic_log">Діагностичний журнал</string>
+    <string name="keep_a_diagnostic_log">Вести діагностичний журнал</string>
+    <string name="diagnostic_log_summary">Зберігається лише на цьому пристрої й ніколи не надсилається автоматично. Анонімний: без назв пристроїв, Bluetooth-адрес, набраного тексту чи клавіш — лише події та лічильники. Останні 3 сеанси, не більше 256 КБ кожен.</string>
+    <string name="view_log">Переглянути журнал</string>
+    <string name="share_log">Поділитися журналом</string>
+    <string name="delete_logs">Видалити журнали</string>
+    <string name="delete_logs_confirm">Видалити всі діагностичні журнали?</string>
+    <string name="log_empty">Журнал порожній.</string>
+    <string name="logs_deleted">Журнали видалено</string>
     <plurals name="imported_layouts">
         <item quantity="one">Імпортовано %1$d розкладку</item>
         <item quantity="few">Імпортовано %1$d розкладки</item>

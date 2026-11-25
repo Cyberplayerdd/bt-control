@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonObject
 
 enum class ThemeMode { SYSTEM, LIGHT, DARK }
 enum class UnknownCharMode { SKIP, WINDOWS_ALT_CODES, WINDOWS_HEX, LINUX_CTRL_SHIFT_U }
@@ -32,6 +33,8 @@ data class Settings(
     val orientations: Map<String, String> = emptyMap(),
     val mediaShowLabels: Boolean = false,
     val welcomeSeen: Boolean = false,
+    /** Local, anonymised diagnostic log (Settings › Diagnostic log). */
+    val diagnosticLog: Boolean = true,
 
     // Keyboard
     val keyboardLayout: String = "fr",
@@ -126,6 +129,14 @@ class AppSettings(context: Context) {
         return m
     }
 
+    /** Settings that differ from the defaults, for the diagnostic log header (nothing personal). */
+    fun nonDefaultSummary(): String {
+        val cur = json.encodeToJsonElement(Settings.serializer(), value).jsonObject
+        val def = json.encodeToJsonElement(Settings.serializer(), Settings()).jsonObject
+        return cur.filter { (k, v) -> k !in PRIVATE_KEYS && def[k] != v }
+            .entries.joinToString(", ") { (k, v) -> "$k=$v" }
+    }
+
     fun update(block: (Settings) -> Settings) {
         val next = block(_flow.value)
         if (next == _flow.value) return
@@ -136,5 +147,7 @@ class AppSettings(context: Context) {
     private companion object {
         const val KEY = "settings_json"
         const val CURRENT_VERSION = 3
+        /** Never written to the log: device address, and values that only add noise. */
+        val PRIVATE_KEYS = setOf("lastDeviceAddress", "lastScreen", "settingsVersion", "welcomeSeen", "gyroBiasX", "gyroBiasY", "gyroBiasZ")
     }
 }

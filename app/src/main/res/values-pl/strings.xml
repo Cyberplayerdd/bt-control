@@ -394,6 +394,15 @@
     <string name="pan">Przesuń</string>
     <string name="size">Rozmiar −</string>
     <string name="size_2">Rozmiar +</string>
+    <string name="diagnostic_log">Dziennik diagnostyczny</string>
+    <string name="keep_a_diagnostic_log">Prowadź dziennik diagnostyczny</string>
+    <string name="diagnostic_log_summary">Zostaje na tym urządzeniu i nigdy nie jest wysyłany automatycznie. Anonimowy: bez nazw urządzeń, adresów Bluetooth, wpisanego tekstu ani klawiszy — tylko zdarzenia i liczniki. Ostatnie 3 sesje, maks. 256 KB każda.</string>
+    <string name="view_log">Pokaż dziennik</string>
+    <string name="share_log">Udostępnij dziennik</string>
+    <string name="delete_logs">Usuń dzienniki</string>
+    <string name="delete_logs_confirm">Usunąć wszystkie dzienniki diagnostyczne?</string>
+    <string name="log_empty">Dziennik jest pusty.</string>
+    <string name="logs_deleted">Dzienniki usunięte</string>
     <plurals name="imported_layouts">
         <item quantity="one">Zaimportowano %1$d układ</item>
         <item quantity="few">Zaimportowano %1$d układy</item>

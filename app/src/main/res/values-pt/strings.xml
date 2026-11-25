@@ -394,6 +394,15 @@
     <string name="pan">Mover</string>
     <string name="size">Tamanho −</string>
     <string name="size_2">Tamanho +</string>
+    <string name="diagnostic_log">Registro de diagnóstico</string>
+    <string name="keep_a_diagnostic_log">Manter um registro de diagnóstico</string>
+    <string name="diagnostic_log_summary">Fica neste dispositivo e nunca é enviado automaticamente. Anônimo: sem nomes de dispositivos, endereços Bluetooth, texto digitado ou teclas — só eventos e contagens. Últimas 3 sessões, máx. 256 KB cada.</string>
+    <string name="view_log">Ver registro</string>
+    <string name="share_log">Compartilhar registro</string>
+    <string name="delete_logs">Excluir registros</string>
+    <string name="delete_logs_confirm">Excluir todos os registros de diagnóstico?</string>
+    <string name="log_empty">O registro está vazio.</string>
+    <string name="logs_deleted">Registros excluídos</string>
     <plurals name="imported_layouts">
         <item quantity="one">%1$d layout importado</item>
         <item quantity="many">%1$d layouts importados</item>

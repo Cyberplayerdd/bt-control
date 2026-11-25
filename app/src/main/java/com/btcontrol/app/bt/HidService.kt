@@ -42,9 +42,11 @@ class HidService : Service() {
                 if (Build.VERSION.SDK_INT >= 29) ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE else 0,
             )
         } catch (e: Exception) {
+            com.btcontrol.app.log.AppLog.w("service", "could not start the background service", e)
             stopSelf()
             return
         }
+        com.btcontrol.app.log.AppLog.i("service", "background service started")
         scope.launch {
             bt.state.collect { st ->
                 getSystemService(NotificationManager::class.java)?.notify(NOTIFICATION_ID, buildNotification(st))
@@ -65,6 +67,7 @@ class HidService : Service() {
     }
 
     override fun onDestroy() {
+        com.btcontrol.app.log.AppLog.i("service", "background service stopped")
         scope.cancel()
         super.onDestroy()
     }

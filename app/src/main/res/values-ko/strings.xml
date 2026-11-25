@@ -394,6 +394,15 @@
     <string name="pan">이동</string>
     <string name="size">크기 −</string>
     <string name="size_2">크기 +</string>
+    <string name="diagnostic_log">진단 로그</string>
+    <string name="keep_a_diagnostic_log">진단 로그 기록</string>
+    <string name="diagnostic_log_summary">이 기기에만 저장되며 자동으로 전송되지 않습니다. 익명 처리: 기기 이름, 블루투스 주소, 입력한 텍스트나 키는 기록하지 않고 이벤트와 횟수만 기록합니다. 최근 3개 세션, 각각 최대 256KB.</string>
+    <string name="view_log">로그 보기</string>
+    <string name="share_log">로그 공유</string>
+    <string name="delete_logs">로그 삭제</string>
+    <string name="delete_logs_confirm">모든 진단 로그를 삭제할까요?</string>
+    <string name="log_empty">로그가 비어 있습니다.</string>
+    <string name="logs_deleted">로그를 삭제했습니다</string>
     <plurals name="imported_layouts">
         <item quantity="other">레이아웃 %1$d개를 가져왔습니다</item>
     </plurals>

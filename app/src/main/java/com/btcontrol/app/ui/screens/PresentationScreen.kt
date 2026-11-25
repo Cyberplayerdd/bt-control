@@ -164,11 +164,14 @@ fun PresentationScreen() {
         }
     }
     val options: @Composable () -> Unit = {
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        // Wraps onto a second line when the column is narrow (landscape, long translations).
+        @OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
+        androidx.compose.foundation.layout.FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            itemVerticalAlignment = Alignment.CenterVertically,
+        ) {
             FilterChip(selected = pptShortcuts, onClick = { pptShortcuts = !pptShortcuts }, label = { Text(t(R.string.powerpoint_laser_keys)) })
-            Spacer(Modifier.width(8.dp))
             FilterChip(selected = false, onClick = { calibrate = true }, label = { Text(t(R.string.calibrate_laser)) })
-            Spacer(Modifier.width(8.dp))
             if (settings.presentationVolumeKeys) {
                 Text(t(R.string.volume_keys_slides), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
@@ -204,7 +207,8 @@ fun PresentationScreen() {
 private fun RowScope.Shortcut(label: String, key: String, onClick: () -> Unit) {
     HoldButton(Modifier.weight(1f).fillMaxHeight(), onRelease = onClick) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(horizontal = 3.dp)) {
-            AutoText(label, maxSize = 13.sp)
+            // Two lines allowed so long translations ("Od tego miejsca") wrap instead of shrinking to nothing.
+            AutoText(label, maxSize = 13.sp, maxLines = 2)
             AutoText(key, maxSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }

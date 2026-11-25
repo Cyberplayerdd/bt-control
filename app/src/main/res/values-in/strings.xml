@@ -394,6 +394,15 @@
     <string name="pan">Geser</string>
     <string name="size">Ukuran −</string>
     <string name="size_2">Ukuran +</string>
+    <string name="diagnostic_log">Log diagnostik</string>
+    <string name="keep_a_diagnostic_log">Simpan log diagnostik</string>
+    <string name="diagnostic_log_summary">Tetap di perangkat ini dan tidak pernah dikirim otomatis. Dianonimkan: tanpa nama perangkat, alamat Bluetooth, teks yang diketik, atau tombol — hanya peristiwa dan hitungan. 3 sesi terakhir, maks. 256 KB per sesi.</string>
+    <string name="view_log">Lihat log</string>
+    <string name="share_log">Bagikan log</string>
+    <string name="delete_logs">Hapus log</string>
+    <string name="delete_logs_confirm">Hapus semua log diagnostik?</string>
+    <string name="log_empty">Log kosong.</string>
+    <string name="logs_deleted">Log dihapus</string>
     <plurals name="imported_layouts">
         <item quantity="other">%1$d tata letak diimpor</item>
     </plurals>

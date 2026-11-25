@@ -394,6 +394,15 @@
     <string name="pan">Déplacer</string>
     <string name="size">Taille −</string>
     <string name="size_2">Taille +</string>
+    <string name="diagnostic_log">Journal de diagnostic</string>
+    <string name="keep_a_diagnostic_log">Tenir un journal de diagnostic</string>
+    <string name="diagnostic_log_summary">Reste sur cet appareil et n\'est jamais envoyé automatiquement. Anonymisé : aucun nom d\'appareil, adresse Bluetooth, texte tapé ni touche — seulement des événements et des compteurs. 3 dernières sessions, 256 Ko max chacune.</string>
+    <string name="view_log">Voir le journal</string>
+    <string name="share_log">Partager le journal</string>
+    <string name="delete_logs">Supprimer les journaux</string>
+    <string name="delete_logs_confirm">Supprimer tous les journaux de diagnostic ?</string>
+    <string name="log_empty">Le journal est vide.</string>
+    <string name="logs_deleted">Journaux supprimés</string>
     <plurals name="imported_layouts">
         <item quantity="one">%1$d disposition importée</item>
         <item quantity="many">%1$d dispositions importées</item>

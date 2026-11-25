@@ -394,6 +394,15 @@
     <string name="pan">Pannen</string>
     <string name="size">Grootte −</string>
     <string name="size_2">Grootte +</string>
+    <string name="diagnostic_log">Diagnoselogboek</string>
+    <string name="keep_a_diagnostic_log">Diagnoselogboek bijhouden</string>
+    <string name="diagnostic_log_summary">Blijft op dit apparaat en wordt nooit automatisch verzonden. Geanonimiseerd: geen apparaatnamen, Bluetooth-adressen, getypte tekst of toetsen — alleen gebeurtenissen en aantallen. Laatste 3 sessies, max. 256 KB per sessie.</string>
+    <string name="view_log">Logboek bekijken</string>
+    <string name="share_log">Logboek delen</string>
+    <string name="delete_logs">Logboeken verwijderen</string>
+    <string name="delete_logs_confirm">Alle diagnoselogboeken verwijderen?</string>
+    <string name="log_empty">Het logboek is leeg.</string>
+    <string name="logs_deleted">Logboeken verwijderd</string>
     <plurals name="imported_layouts">
         <item quantity="one">%1$d indeling geïmporteerd</item>
         <item quantity="other">%1$d indelingen geïmporteerd</item>

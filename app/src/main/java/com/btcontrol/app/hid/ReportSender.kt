@@ -1,7 +1,7 @@
 package com.btcontrol.app.hid
 
 import android.os.SystemClock
-import android.util.Log
+import com.btcontrol.app.log.AppLog
 
 /**
  * Serialises every HID input report onto one worker thread.
@@ -86,7 +86,7 @@ class ReportSender(
             queue.addLast(item)
             if (queue.size > 512) {
                 // Something is very wrong with the link; avoid unbounded growth.
-                Log.w(TAG, "Report queue overflow, dropping oldest")
+                AppLog.countDropped()
                 queue.removeFirst()
             }
             lock.notifyAll()
@@ -116,26 +116,25 @@ class ReportSender(
                 ok = try {
                     transport(item.id, item.data)
                 } catch (t: Throwable) {
-                    Log.w(TAG, "sendReport failed", t)
+                    AppLog.w("hid", "sendReport threw", t)
                     false
                 }
                 if (!ok) {
+                    if (attempts == 0) AppLog.countRetried()
                     attempts++
                     SystemClock.sleep(3)
                 }
             }
             if (!ok) {
                 if (!isConnected()) clear()
-                else Log.w(TAG, "Dropped report id=${item.id} after retries")
-            }
+                else AppLog.countDropped()
+            } else AppLog.countReport(item.id, item.data)
             lastSent[item.id] = SystemClock.uptimeMillis()
             if (item.delayAfterMs > 0) SystemClock.sleep(item.delayAfterMs.toLong())
         }
     }
 
     companion object {
-        private const val TAG = "ReportSender"
-
         fun mouseBytes(buttons: Int, dx: Int, dy: Int, wheel: Int, pan: Int) = byteArrayOf(
             buttons.toByte(),
             (dx and 0xFF).toByte(), ((dx shr 8) and 0xFF).toByte(),

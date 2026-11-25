@@ -395,6 +395,15 @@
     <string name="pan">Pan</string>
     <string name="size">Size −</string>
     <string name="size_2">Size +</string>
+    <string name="diagnostic_log">Diagnostic log</string>
+    <string name="keep_a_diagnostic_log">Keep a diagnostic log</string>
+    <string name="diagnostic_log_summary">Stays on this device and is never sent automatically. Anonymised: no device names, Bluetooth addresses, typed text or keys — only events and counts. Last 3 sessions, 256 KB max each.</string>
+    <string name="view_log">View log</string>
+    <string name="share_log">Share log</string>
+    <string name="delete_logs">Delete logs</string>
+    <string name="delete_logs_confirm">Delete all diagnostic logs?</string>
+    <string name="log_empty">The log is empty.</string>
+    <string name="logs_deleted">Logs deleted</string>
     <plurals name="imported_layouts">
         <item quantity="one">Imported %1$d layout</item>
         <item quantity="other">Imported %1$d layouts</item>

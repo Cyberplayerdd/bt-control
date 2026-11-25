@@ -81,9 +81,9 @@
     <string name="play_pause">Воспроизв. / Пауза</string>
     <string name="mute">Без звука</string>
     <string name="volume">Громкость +</string>
-    <string name="prev">Пред.</string>
+    <string name="prev">Назад</string>
     <string name="volume_2">Громкость −</string>
-    <string name="next">След.</string>
+    <string name="next">Далее</string>
     <string name="exit_fullscreen">Выйти из полноэкранного</string>
     <string name="web_browser">Веб-браузер</string>
     <string name="back">Назад</string>
@@ -132,7 +132,7 @@
     <string name="auto_rotate">Автоповорот</string>
     <string name="controls">Управление</string>
     <string name="custom_layouts">Свои раскладки</string>
-    <string name="configuration">Настройка</string>
+    <string name="configuration">Конфигурация</string>
     <string name="about_help">О приложении и справка</string>
     <string name="not_connected">Не подключено</string>
     <string name="bluetooth_permission_needed">Нужно разрешение Bluetooth</string>
@@ -394,6 +394,15 @@
     <string name="pan">Сдвиг</string>
     <string name="size">Размер −</string>
     <string name="size_2">Размер +</string>
+    <string name="diagnostic_log">Диагностический журнал</string>
+    <string name="keep_a_diagnostic_log">Вести диагностический журнал</string>
+    <string name="diagnostic_log_summary">Хранится только на этом устройстве и никогда не отправляется автоматически. Анонимный: без названий устройств, Bluetooth-адресов, набранного текста и клавиш — только события и счётчики. Последние 3 сеанса, не более 256 КБ каждый.</string>
+    <string name="view_log">Открыть журнал</string>
+    <string name="share_log">Поделиться журналом</string>
+    <string name="delete_logs">Удалить журналы</string>
+    <string name="delete_logs_confirm">Удалить все диагностические журналы?</string>
+    <string name="log_empty">Журнал пуст.</string>
+    <string name="logs_deleted">Журналы удалены</string>
     <plurals name="imported_layouts">
         <item quantity="one">Импортирована %1$d раскладка</item>
         <item quantity="few">Импортировано %1$d раскладки</item>

@@ -394,6 +394,15 @@
     <string name="pan">Kaydır</string>
     <string name="size">Boyut −</string>
     <string name="size_2">Boyut +</string>
+    <string name="diagnostic_log">Tanılama günlüğü</string>
+    <string name="keep_a_diagnostic_log">Tanılama günlüğü tut</string>
+    <string name="diagnostic_log_summary">Bu cihazda kalır ve asla otomatik olarak gönderilmez. Anonimdir: cihaz adı, Bluetooth adresi, yazılan metin veya tuş yok — yalnızca olaylar ve sayılar. Son 3 oturum, her biri en fazla 256 KB.</string>
+    <string name="view_log">Günlüğü göster</string>
+    <string name="share_log">Günlüğü paylaş</string>
+    <string name="delete_logs">Günlükleri sil</string>
+    <string name="delete_logs_confirm">Tüm tanılama günlükleri silinsin mi?</string>
+    <string name="log_empty">Günlük boş.</string>
+    <string name="logs_deleted">Günlükler silindi</string>
     <plurals name="imported_layouts">
         <item quantity="one">%1$d düzen içe aktarıldı</item>
         <item quantity="other">%1$d düzen içe aktarıldı</item>

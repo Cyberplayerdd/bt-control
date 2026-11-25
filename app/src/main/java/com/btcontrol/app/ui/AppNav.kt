@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -73,6 +74,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -153,6 +155,7 @@ fun AppRoot(actions: AppActions) {
 
     fun navigateRoot(r: String) {
         stackText = r
+        com.btcontrol.app.log.AppLog.i("ui", "screen: " + if (r.startsWith("layout/")) "custom layout" else r)
         if (Dest.of(r)?.let { it in Dest.CONTROLS } == true || r.startsWith("layout/")) {
             app.settings.update { it.copy(lastScreen = r) }
         }
@@ -274,7 +277,22 @@ fun AppRoot(actions: AppActions) {
             Scaffold(
                 topBar = {
                     TopAppBar(
-                        title = { Text(title, maxLines = 1, overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.SemiBold) },
+                        // Long translated titles shrink a little instead of being cut with "…".
+                        title = {
+                            androidx.compose.foundation.text.BasicText(
+                                title,
+                                style = MaterialTheme.typography.titleLarge.copy(
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = androidx.compose.material3.LocalContentColor.current,
+                                ),
+                                maxLines = 1,
+                                softWrap = false,
+                                overflow = TextOverflow.Ellipsis,
+                                autoSize = androidx.compose.foundation.text.TextAutoSize.StepBased(
+                                    minFontSize = 13.sp, maxFontSize = MaterialTheme.typography.titleLarge.fontSize, stepSize = 0.5.sp,
+                                ),
+                            )
+                        },
                         navigationIcon = {
                             if (stack.size > 1) {
                                 IconButton(onClick = { pop() }) { Icon(Icons.AutoMirrored.Outlined.ArrowBack, t(R.string.back)) }
@@ -437,8 +455,12 @@ private fun ConnectionBanner(s: HidState, actions: AppActions, openDevices: () -
         else -> Triple(statusText(s), t(R.string.devices), openDevices)
     }
     Surface(color = MaterialTheme.colorScheme.secondaryContainer, modifier = Modifier.fillMaxWidth()) {
-        Row(Modifier.padding(start = 16.dp, end = 8.dp).height(44.dp), verticalAlignment = Alignment.CenterVertically) {
-            Text(text, style = MaterialTheme.typography.bodySmall, modifier = Modifier.weight(1f), maxLines = 2, overflow = TextOverflow.Ellipsis)
+        // Grows for long (translated) error messages instead of cutting them off.
+        Row(
+            Modifier.padding(start = 16.dp, end = 8.dp).heightIn(min = 44.dp).padding(vertical = 2.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(text, style = MaterialTheme.typography.bodySmall, modifier = Modifier.weight(1f))
             TextButton(onClick = action) { Text(button, maxLines = 1, overflow = TextOverflow.Ellipsis) }
         }
     }

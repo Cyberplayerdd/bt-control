@@ -394,6 +394,15 @@
     <string name="pan">Verschieben</string>
     <string name="size">Größe −</string>
     <string name="size_2">Größe +</string>
+    <string name="diagnostic_log">Diagnoseprotokoll</string>
+    <string name="keep_a_diagnostic_log">Diagnoseprotokoll führen</string>
+    <string name="diagnostic_log_summary">Bleibt auf diesem Gerät und wird nie automatisch gesendet. Anonymisiert: keine Gerätenamen, Bluetooth-Adressen, getippten Texte oder Tasten – nur Ereignisse und Zähler. Letzte 3 Sitzungen, je max. 256 KB.</string>
+    <string name="view_log">Protokoll ansehen</string>
+    <string name="share_log">Protokoll teilen</string>
+    <string name="delete_logs">Protokolle löschen</string>
+    <string name="delete_logs_confirm">Alle Diagnoseprotokolle löschen?</string>
+    <string name="log_empty">Das Protokoll ist leer.</string>
+    <string name="logs_deleted">Protokolle gelöscht</string>
     <plurals name="imported_layouts">
         <item quantity="one">%1$d Layout importiert</item>
         <item quantity="other">%1$d Layouts importiert</item>

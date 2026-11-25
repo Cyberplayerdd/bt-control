@@ -394,6 +394,15 @@
     <string name="pan">平移</string>
     <string name="size">大小 −</string>
     <string name="size_2">大小 +</string>
+    <string name="diagnostic_log">诊断日志</string>
+    <string name="keep_a_diagnostic_log">记录诊断日志</string>
+    <string name="diagnostic_log_summary">仅保存在此设备上，绝不会自动发送。已匿名化：不含设备名称、蓝牙地址、输入的文字或按键，只有事件和计数。保留最近 3 次会话，每次最多 256 KB。</string>
+    <string name="view_log">查看日志</string>
+    <string name="share_log">分享日志</string>
+    <string name="delete_logs">删除日志</string>
+    <string name="delete_logs_confirm">删除所有诊断日志？</string>
+    <string name="log_empty">日志为空。</string>
+    <string name="logs_deleted">日志已删除</string>
     <plurals name="imported_layouts">
         <item quantity="other">已导入 %1$d 个布局</item>
     </plurals>
