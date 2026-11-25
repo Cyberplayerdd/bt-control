@@ -1,5 +1,7 @@
 package com.btcontrol.app.ui.components
 
+import com.btcontrol.app.R
+import com.btcontrol.app.t
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,7 +45,7 @@ object KeyboardSizes {
     const val FN = -1
     const val GAP = 0
 
-    val ALL = listOf("40" to "40%", "60" to "60%", "65" to "65%", "75" to "75%", "tkl" to "TKL", "full" to "Full")
+    val ALL get() = listOf("40" to "40%", "60" to "60%", "65" to "65%", "75" to "75%", "tkl" to "TKL", "full" to t(R.string.full))
 
     private val NUM_FN = mapOf(
         Key.N1 to Key.F1, Key.N2 to Key.F2, Key.N3 to Key.F3, Key.N4 to Key.F4, Key.N5 to Key.F5,

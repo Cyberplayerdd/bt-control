@@ -1,5 +1,7 @@
 package com.btcontrol.app.bt
 
+import com.btcontrol.app.R
+import com.btcontrol.app.t
 import android.Manifest
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
@@ -97,7 +99,7 @@ class BluetoothHidManager(
     )
     val hid = HidController(sender, settings)
 
-    val adapterName: String get() = runCatching { adapter?.name }.getOrNull() ?: "this device"
+    val adapterName: String get() = runCatching { adapter?.name }.getOrNull() ?: t(R.string.this_device)
 
     fun hasConnectPermission(): Boolean =
         Build.VERSION.SDK_INT < Build.VERSION_CODES.S ||
@@ -133,7 +135,7 @@ class BluetoothHidManager(
             _state.value = HidState(HidStatus.STARTING)
             proxyRequested = adapter.getProfileProxy(context, serviceListener, BluetoothProfile.HID_DEVICE)
             if (!proxyRequested) {
-                _state.value = HidState(HidStatus.UNSUPPORTED, message = "This phone does not expose the Bluetooth HID Device profile.")
+                _state.value = HidState(HidStatus.UNSUPPORTED, message = t(R.string.this_phone_does_not_expose_the_bluetooth_h))
             }
         } else if (hidDevice != null && !registered) {
             registerApp()
@@ -158,7 +160,7 @@ class BluetoothHidManager(
             runCatching { context.unregisterReceiver(receiver) }
             receiversRegistered = false
         }
-        _state.value = HidState(HidStatus.STARTING, message = "Stopped")
+        _state.value = HidState(HidStatus.STARTING, message = t(R.string.stopped))
     }
 
     private val serviceListener = object : BluetoothProfile.ServiceListener {
@@ -188,14 +190,14 @@ class BluetoothHidManager(
             BluetoothHidDevice.SUBCLASS1_COMBO,
             HidDescriptor.DESCRIPTOR,
         )
-        _state.value = HidState(HidStatus.STARTING, message = "Registering HID device…")
+        _state.value = HidState(HidStatus.STARTING, message = t(R.string.registering_hid_device))
         val ok = runCatching { h.registerApp(sdp, null, null, executor, callback) }.getOrElse {
             Log.e(TAG, "registerApp threw", it); false
         }
         if (!ok) {
             _state.value = HidState(
                 HidStatus.REGISTRATION_FAILED,
-                message = "Could not register as a Bluetooth HID device. Another keyboard/mouse app may be using it — close it, toggle Bluetooth and retry.",
+                message = t(R.string.could_not_register_as_a_bluetooth_hid_devi),
             )
         }
     }
@@ -208,7 +210,7 @@ class BluetoothHidManager(
                 setDisconnected()
                 if (started && isBluetoothOn) {
                     _state.value = HidState(HidStatus.REGISTRATION_FAILED,
-                        message = "HID registration was released (another app may have taken it). Tap Retry.")
+                        message = t(R.string.hid_registration_was_released_another_app))
                 }
                 return
             }
@@ -321,7 +323,7 @@ class BluetoothHidManager(
         _state.value = HidState(HidStatus.CONNECTING, nameOf(device), device.address)
         val ok = runCatching { h.connect(device) }.getOrDefault(false)
         if (!ok) {
-            _state.value = HidState(HidStatus.READY, message = "Could not start a connection to ${nameOf(device)}.")
+            _state.value = HidState(HidStatus.READY, message = t(R.string.could_not_connect_to, nameOf(device)))
         }
     }
 

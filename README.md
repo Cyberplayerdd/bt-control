@@ -8,6 +8,7 @@ device, exactly like a real keyboard, mouse, game controller or Wacom-style pen.
 it works on Windows, Linux, ChromeOS and Android TV (macOS works except for the pen).
 
 Requires Android 9 or newer with the Bluetooth *HID Device* profile (most phones and tablets).
+Available in 18 languages (see [Languages](#languages)).
 
 ## Main features
 
@@ -84,6 +85,23 @@ sizes, landscape mode; import/export (JSON), share, duplicate; three examples in
 - Bluetooth devices screen: make visible, search and pair, connect/disconnect, forget
 - Reconnects automatically to the last computer; stays connected in the background
 - Light/dark theme, dynamic colours, haptic feedback, keep-screen-on, adjustable report rate
+- 18 app languages, follows the phone's language or can be set for this app only
+
+## Languages
+
+English, Français, Español, Deutsch, Italiano, Português, Nederlands, Polski, Русский, Українська,
+Türkçe, Ελληνικά, 日本語, 한국어, 简体中文, हिन्दी, Bahasa Indonesia, Tiếng Việt.
+
+The app follows the phone's language. To use another one for BT Control only (Android 13+): app
+**Settings › Language**, or Android *Settings › Apps › BT Control › Language*.
+
+The app language is separate from the **PC keyboard layout** (Settings › Computer keyboard), which
+must match the layout selected on the computer.
+
+The translations other than English and French were machine-assisted. Corrections are welcome: the
+texts are in `app/src/main/res/values-<language>/strings.xml` (English source:
+`app/src/main/res/values/strings.xml`). To add a language, copy that file into a new
+`values-<code>` folder, translate it, and add the code to `app/src/main/res/xml/locales_config.xml`.
 
 ## Rotation and full screen
 
@@ -173,6 +191,8 @@ app/src/main/java/com/btcontrol/app/
   data/  AppSettings, CustomLayouts (models, repository, action runner, examples)
   ui/    MainActivity, AppNav (drawer), components (HoldButton, Touchpad, KeyInputView, forms),
          screens (one file per screen; PenInputView = raw stylus handling)
+  I18n   t(R.string.x) — string lookup usable outside composables
+app/src/main/res/values*/strings.xml   texts in each language
 ```
 
 ## License

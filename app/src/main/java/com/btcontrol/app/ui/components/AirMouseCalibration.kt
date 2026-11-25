@@ -1,5 +1,7 @@
 package com.btcontrol.app.ui.components
 
+import com.btcontrol.app.R
+import com.btcontrol.app.t
 import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -114,16 +116,15 @@ fun CalibrateAirMouseDialog(onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = { if (state != 1) onDismiss() },
         icon = { Icon(Icons.Outlined.GpsFixed, null) },
-        title = { Text("Calibrate air mouse") },
+        title = { Text(t(R.string.calibrate_air_mouse)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(
                     when (state) {
-                        0 -> "Put the device down flat on a table, tap Start and don't touch it for 2 seconds.\n\n" +
-                            "This removes the gyroscope drift that makes the cursor creep on its own."
-                        1 -> "Calibrating… keep the device still."
-                        2 -> "Done. The cursor should now stay put when you hold the device still."
-                        else -> "The device moved during the measurement. Put it down flat, don't touch it, and try again."
+                        0 -> t(R.string.put_the_device_down_flat_on_a_table_tap_st)
+                        1 -> t(R.string.calibrating_keep_the_device_still)
+                        2 -> t(R.string.done_the_cursor_should_now_stay_put_when_y)
+                        else -> t(R.string.the_device_moved_during_the_measurement_pu)
                     }
                 )
                 if (state == 1) LinearProgressIndicator(progress = { progress }, modifier = Modifier.fillMaxWidth())
@@ -135,12 +136,12 @@ fun CalibrateAirMouseDialog(onDismiss: () -> Unit) {
                     state = 1
                     progress = 0f
                     GyroCalibration.calibrate(context.applicationContext, { progress = it }) { ok -> state = if (ok) 2 else 3 }
-                }) { Text(if (state == 3) "Try again" else "Start") }
-                2 -> Button(onClick = onDismiss) { Text("Done") }
+                }) { Text(if (state == 3) t(R.string.try_again) else t(R.string.start)) }
+                2 -> Button(onClick = onDismiss) { Text(t(R.string.done)) }
                 else -> Unit
             }
         },
-        dismissButton = { if (state == 0 || state == 3) TextButton(onClick = onDismiss) { Text("Cancel") } },
+        dismissButton = { if (state == 0 || state == 3) TextButton(onClick = onDismiss) { Text(t(R.string.cancel)) } },
     )
 }
 
@@ -153,17 +154,17 @@ fun AirMouseBar(on: Boolean, onToggle: () -> Unit, modifier: Modifier = Modifier
         if (on) {
             Button(onClick = onToggle, modifier = Modifier.weight(1f)) {
                 Icon(Icons.Outlined.Mouse, null, Modifier.size(20.dp)); Spacer(Modifier.width(8.dp))
-                Text("Air mouse: ON — move the device")
+                Text(t(R.string.air_mouse_on_move_the_device))
             }
         } else {
             FilledTonalButton(onClick = onToggle, modifier = Modifier.weight(1f)) {
                 Icon(Icons.Outlined.Mouse, null, Modifier.size(20.dp)); Spacer(Modifier.width(8.dp))
-                Text("Air mouse: OFF")
+                Text(t(R.string.air_mouse_off))
             }
         }
         OutlinedButton(onClick = { calibrate = true }) {
             Icon(Icons.Outlined.GpsFixed, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp))
-            Text("Calibrate")
+            Text(t(R.string.calibrate))
         }
     }
 }

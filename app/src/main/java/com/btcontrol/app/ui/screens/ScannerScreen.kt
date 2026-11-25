@@ -1,5 +1,7 @@
 package com.btcontrol.app.ui.screens
 
+import com.btcontrol.app.R
+import com.btcontrol.app.t
 import android.Manifest
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -85,9 +87,9 @@ fun ScannerScreen() {
 
     if (!granted) {
         Column(Modifier.fillMaxSize().padding(24.dp), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("The code scanner needs the camera to read barcodes and QR codes.", style = MaterialTheme.typography.bodyLarge)
+            Text(t(R.string.the_code_scanner_needs_the_camera_to_read), style = MaterialTheme.typography.bodyLarge)
             Spacer(Modifier.padding(8.dp))
-            Button(onClick = { launcher.launch(Manifest.permission.CAMERA) }) { Text("Allow camera") }
+            Button(onClick = { launcher.launch(Manifest.permission.CAMERA) }) { Text(t(R.string.allow_camera)) }
         }
         return
     }
@@ -176,7 +178,7 @@ private fun ScannerContent() {
                     .background(Color.White.copy(alpha = 0.08f), RoundedCornerShape(12.dp))
             )
             IconButton(onClick = { torch = !torch }, modifier = Modifier.align(Alignment.TopEnd).padding(8.dp)) {
-                Icon(if (torch) Icons.Outlined.FlashlightOn else Icons.Outlined.FlashlightOff, "Torch", tint = Color.White)
+                Icon(if (torch) Icons.Outlined.FlashlightOn else Icons.Outlined.FlashlightOff, t(R.string.torch), tint = Color.White)
             }
         }
     }
@@ -186,7 +188,7 @@ private fun ScannerContent() {
                 FilterChip(
                     selected = settings.scanAutoSend,
                     onClick = { app.settings.update { it.copy(scanAutoSend = !it.scanAutoSend) } },
-                    label = { Text("Send automatically") },
+                    label = { Text(t(R.string.send_automatically)) },
                 )
                 SuffixChip(settings.scanSuffix) { s -> app.settings.update { it.copy(scanSuffix = s) } }
             }
@@ -196,13 +198,13 @@ private fun ScannerContent() {
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(p.value, Modifier.weight(1f), maxLines = 2, overflow = TextOverflow.Ellipsis)
-                    Button(onClick = { send(p.value); pending = null }) { Text("Send") }
+                    Button(onClick = { send(p.value); pending = null }) { Text(t(R.string.send)) }
                 }
             }
             LazyColumn(Modifier.fillMaxWidth().weight(1f)) {
                 if (history.isEmpty()) item {
                     Text(
-                        "Point the camera at a barcode or QR code. Its content is typed on the computer where the cursor is.",
+                        t(R.string.point_the_camera_at_a_barcode_or_qr_code_i),
                         style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(8.dp),
                     )
@@ -213,8 +215,8 @@ private fun ScannerContent() {
                         supportingContent = { Text("${e.format} · ${DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(e.time))}") },
                         trailingContent = {
                             Row {
-                                IconButton(onClick = { copy(context, e.value) }) { Icon(Icons.Outlined.ContentCopy, "Copy") }
-                                IconButton(onClick = { send(e.value) }) { Icon(Icons.AutoMirrored.Outlined.Send, "Send again") }
+                                IconButton(onClick = { copy(context, e.value) }) { Icon(Icons.Outlined.ContentCopy, t(R.string.copy_2)) }
+                                IconButton(onClick = { send(e.value) }) { Icon(Icons.AutoMirrored.Outlined.Send, t(R.string.send_again)) }
                             }
                         },
                     )
@@ -240,7 +242,7 @@ private fun ScannerContent() {
 private fun SuffixChip(value: ScanSuffix, onChange: (ScanSuffix) -> Unit) {
     var open by remember { mutableStateOf(false) }
     Box {
-        FilterChip(selected = false, onClick = { open = true }, label = { Text("Then: " + suffixName(value)) })
+        FilterChip(selected = false, onClick = { open = true }, label = { Text(t(R.string.then_suffix, suffixName(value))) })
         DropdownMenu(open, onDismissRequest = { open = false }) {
             for (s in ScanSuffix.entries) DropdownMenuItem(text = { Text(suffixName(s)) }, onClick = { onChange(s); open = false })
         }
@@ -248,10 +250,10 @@ private fun SuffixChip(value: ScanSuffix, onChange: (ScanSuffix) -> Unit) {
 }
 
 private fun suffixName(s: ScanSuffix) = when (s) {
-    ScanSuffix.NONE -> "nothing"
+    ScanSuffix.NONE -> t(R.string.suffix_nothing)
     ScanSuffix.ENTER -> "Enter"
     ScanSuffix.TAB -> "Tab"
-    ScanSuffix.SPACE -> "Space"
+    ScanSuffix.SPACE -> t(R.string.space_2)
 }
 
 private fun copy(context: Context, text: String) {
@@ -260,7 +262,7 @@ private fun copy(context: Context, text: String) {
 }
 
 private fun formatName(f: Int) = when (f) {
-    Barcode.FORMAT_QR_CODE -> "QR code"
+    Barcode.FORMAT_QR_CODE -> t(R.string.qr_code)
     Barcode.FORMAT_EAN_13 -> "EAN-13"
     Barcode.FORMAT_EAN_8 -> "EAN-8"
     Barcode.FORMAT_UPC_A -> "UPC-A"
@@ -273,5 +275,5 @@ private fun formatName(f: Int) = when (f) {
     Barcode.FORMAT_DATA_MATRIX -> "Data Matrix"
     Barcode.FORMAT_PDF417 -> "PDF417"
     Barcode.FORMAT_AZTEC -> "Aztec"
-    else -> "Barcode"
+    else -> t(R.string.barcode)
 }

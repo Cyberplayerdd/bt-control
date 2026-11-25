@@ -1,5 +1,7 @@
 package com.btcontrol.app.ui.screens
 
+import com.btcontrol.app.R
+import com.btcontrol.app.t
 import android.content.res.Configuration
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
@@ -85,23 +87,23 @@ fun RemoteScreen() {
     if (confirmSleep) {
         AlertDialog(
             onDismissRequest = { confirmSleep = false },
-            title = { Text("Put the computer to sleep?") },
-            confirmButton = { TextButton(onClick = { hid.systemTap(SystemKey.SLEEP); confirmSleep = false }) { Text("Sleep") } },
-            dismissButton = { TextButton(onClick = { confirmSleep = false }) { Text("Cancel") } },
+            title = { Text(t(R.string.put_the_computer_to_sleep)) },
+            confirmButton = { TextButton(onClick = { hid.systemTap(SystemKey.SLEEP); confirmSleep = false }) { Text(t(R.string.sleep)) } },
+            dismissButton = { TextButton(onClick = { confirmSleep = false }) { Text(t(R.string.cancel)) } },
         )
     }
 
     val topRow: @Composable (Modifier) -> Unit = { m ->
         Row(m, horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-            RoundKey(Icons.Outlined.PowerSettingsNew, "Sleep", tint = Color(0xFFC62828)) { confirmSleep = true }
-            RoundKey(Icons.Outlined.Fullscreen, "Fullscreen (F)") { hid.shortcut(Key.F) }
-            RoundKey(Icons.AutoMirrored.Outlined.VolumeOff, "Mute", consumer = Consumer.MUTE)
+            RoundKey(Icons.Outlined.PowerSettingsNew, t(R.string.sleep), tint = Color(0xFFC62828)) { confirmSleep = true }
+            RoundKey(Icons.Outlined.Fullscreen, t(R.string.fullscreen_f)) { hid.shortcut(Key.F) }
+            RoundKey(Icons.AutoMirrored.Outlined.VolumeOff, t(R.string.mute), consumer = Consumer.MUTE)
         }
     }
     val navRow: @Composable (Modifier) -> Unit = { m ->
         Row(m, horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-            RoundKey(Icons.AutoMirrored.Outlined.ArrowBack, "Back (Esc)", key = Key.ESC)
-            RoundKey(Icons.Outlined.Home, "Home (Start menu)", key = Key.LEFT_GUI)
+            RoundKey(Icons.AutoMirrored.Outlined.ArrowBack, t(R.string.back_esc), key = Key.ESC)
+            RoundKey(Icons.Outlined.Home, t(R.string.home_start_menu), key = Key.LEFT_GUI)
             RoundKey(Icons.Outlined.Menu, "Menu", key = Key.APPLICATION)
         }
     }
@@ -109,18 +111,18 @@ fun RemoteScreen() {
         Row(m, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
             Rocker("VOL", Consumer.VOLUME_UP, Consumer.VOLUME_DOWN, Icons.Outlined.Add, Icons.Outlined.Remove)
             Column(Modifier.weight(1f).fillMaxHeight(), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                PillKey(Icons.Outlined.PlayArrow, "Play / Pause", Consumer.PLAY_PAUSE, Modifier.weight(1.3f), primary = true)
-                PillKey(Icons.Outlined.Stop, "Stop", Consumer.STOP, Modifier.weight(1f))
+                PillKey(Icons.Outlined.PlayArrow, t(R.string.play_pause), Consumer.PLAY_PAUSE, Modifier.weight(1.3f), primary = true)
+                PillKey(Icons.Outlined.Stop, t(R.string.stop), Consumer.STOP, Modifier.weight(1f))
             }
             Rocker("CH", Consumer.NEXT_TRACK, Consumer.PREV_TRACK, Icons.Outlined.KeyboardArrowUp, Icons.Outlined.KeyboardArrowDown)
         }
     }
     val transport: @Composable (Modifier) -> Unit = { m ->
         Row(m, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            PillKey(Icons.Outlined.SkipPrevious, "Previous", Consumer.PREV_TRACK, Modifier.weight(1f))
-            PillKey(Icons.Outlined.FastRewind, "Rewind", Consumer.REWIND, Modifier.weight(1f))
-            PillKey(Icons.Outlined.FastForward, "Forward", Consumer.FAST_FORWARD, Modifier.weight(1f))
-            PillKey(Icons.Outlined.SkipNext, "Next", Consumer.NEXT_TRACK, Modifier.weight(1f))
+            PillKey(Icons.Outlined.SkipPrevious, t(R.string.previous), Consumer.PREV_TRACK, Modifier.weight(1f))
+            PillKey(Icons.Outlined.FastRewind, t(R.string.rewind), Consumer.REWIND, Modifier.weight(1f))
+            PillKey(Icons.Outlined.FastForward, t(R.string.forward), Consumer.FAST_FORWARD, Modifier.weight(1f))
+            PillKey(Icons.Outlined.SkipNext, t(R.string.next), Consumer.NEXT_TRACK, Modifier.weight(1f))
         }
     }
 
@@ -181,7 +183,7 @@ private fun NavPad(size: Dp, pointer: Boolean) {
             onPress = { if (pointer) hid.mouseDown(MouseButton.LEFT) else hid.keyDown(Key.ENTER) },
             onRelease = { if (pointer) hid.mouseUp(MouseButton.LEFT) else hid.keyUp(Key.ENTER) },
             shape = CircleShape, containerColor = MaterialTheme.colorScheme.primaryContainer,
-        ) { AutoText(if (pointer) "Click" else "OK", maxSize = 22.sp) }
+        ) { AutoText(if (pointer) t(R.string.click) else "OK", maxSize = 22.sp) }
     }
 }
 

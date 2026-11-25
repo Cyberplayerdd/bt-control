@@ -1,5 +1,7 @@
 package com.btcontrol.app.ui
 
+import com.btcontrol.app.R
+import com.btcontrol.app.t
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -36,35 +38,31 @@ import androidx.compose.ui.unit.dp
 fun WelcomeDialog(onPair: () -> Unit, onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Welcome to BT Control") },
+        title = { Text(t(R.string.welcome_to_bt_control)) },
         text = {
             Column(
                 Modifier.heightIn(max = 520.dp).verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 Text(
-                    "BT Control turns this phone or tablet into a Bluetooth keyboard, mouse, remote, " +
-                        "gamepad and drawing tablet for your computer. Nothing to install on the PC: " +
-                        "it simply sees a real Bluetooth device.",
+                    t(R.string.bt_control_turns_this_phone_or_tablet_into),
                 )
-                Feature(Icons.Outlined.Mouse, "Mouse & keyboard", "Touchpad, phone keyboard, air mouse")
-                Feature(Icons.Outlined.Keyboard, "Computer keyboard", "From 40% to full size, in your PC's layout")
-                Feature(Icons.Outlined.SettingsRemote, "Remote & multimedia", "Play/pause, volume, navigation, sleep")
-                Feature(Icons.Outlined.Brush, "Drawing tablet", "Pen pressure, tilt and hover (Windows Ink)")
-                Feature(Icons.Outlined.SportsEsports, "Gamepad", "Two sticks, D-pad, buttons and triggers")
-                Feature(Icons.Outlined.Slideshow, "Presentation", "Next/previous, laser pointer, timer")
-                Feature(Icons.Outlined.QrCodeScanner, "Code scanner", "Types barcodes and QR codes on the PC")
-                Feature(Icons.Outlined.Widgets, "Custom layouts", "Your own buttons, shortcuts and macros")
-                Text("Getting started", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
+                Feature(Icons.Outlined.Mouse, t(R.string.nav_mouse), t(R.string.touchpad_phone_keyboard_air_mouse))
+                Feature(Icons.Outlined.Keyboard, t(R.string.nav_keyboard), t(R.string.from_40_to_full_size_in_your_pc_s_layout))
+                Feature(Icons.Outlined.SettingsRemote, t(R.string.remote_multimedia), t(R.string.play_pause_volume_navigation_sleep))
+                Feature(Icons.Outlined.Brush, t(R.string.nav_tablet), t(R.string.pen_pressure_tilt_and_hover_windows_ink))
+                Feature(Icons.Outlined.SportsEsports, t(R.string.nav_gamepad), t(R.string.two_sticks_d_pad_buttons_and_triggers))
+                Feature(Icons.Outlined.Slideshow, t(R.string.nav_presentation), t(R.string.next_previous_laser_pointer_timer))
+                Feature(Icons.Outlined.QrCodeScanner, t(R.string.nav_scanner), t(R.string.types_barcodes_and_qr_codes_on_the_pc))
+                Feature(Icons.Outlined.Widgets, t(R.string.custom_layouts), t(R.string.your_own_buttons_shortcuts_and_macros))
+                Text(t(R.string.getting_started), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
                 Text(
-                    "1. Tap “Pair a computer” and make this device visible.\n" +
-                        "2. On the PC: Bluetooth settings › Add device › choose this device.\n" +
-                        "3. Open the menu (☰) and pick what you want to control.",
+                    t(R.string.n1_tap_pair_a_computer_and_make_this_device),
                 )
             }
         },
-        confirmButton = { Button(onClick = onPair) { Text("Pair a computer") } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Got it") } },
+        confirmButton = { Button(onClick = onPair) { Text(t(R.string.pair_a_computer)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(t(R.string.got_it)) } },
     )
 }
 

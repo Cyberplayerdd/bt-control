@@ -128,6 +128,7 @@ class MainActivity : ComponentActivity() {
     }
 
     /** Screens (e.g. presentation remote) can intercept hardware keys such as volume buttons. */
+    @android.annotation.SuppressLint("RestrictedApi") // false positive: this overrides Activity.dispatchKeyEvent
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         keyInterceptor?.let { if (it(event)) return true }
         return super.dispatchKeyEvent(event)

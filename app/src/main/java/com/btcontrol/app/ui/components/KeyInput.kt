@@ -1,5 +1,7 @@
 package com.btcontrol.app.ui.components
 
+import com.btcontrol.app.R
+import com.btcontrol.app.t
 import android.annotation.SuppressLint
 import android.content.Context
 import android.text.InputType
@@ -220,18 +222,18 @@ fun SendTextDialog(onDismiss: () -> Unit) {
     var enter by rememberSaveable { mutableStateOf(false) }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Send text") },
+        title = { Text(t(R.string.send_text)) },
         text = {
             Column {
                 OutlinedTextField(
                     value = text,
                     onValueChange = { text = it },
                     modifier = Modifier.fillMaxWidth().heightIn(min = 120.dp),
-                    placeholder = { Text("Type or paste text…") },
+                    placeholder = { Text(t(R.string.type_or_paste_text)) },
                 )
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Checkbox(checked = enter, onCheckedChange = { enter = it })
-                    Text("Press Enter after sending")
+                    Text(t(R.string.press_enter_after_sending))
                 }
             }
         },
@@ -240,8 +242,8 @@ fun SendTextDialog(onDismiss: () -> Unit) {
                 hid.typeText(if (enter) text + "\n" else text)
                 text = ""
                 onDismiss()
-            }) { Text("Send") }
+            }) { Text(t(R.string.send)) }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Close") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(t(R.string.close)) } },
     )
 }

@@ -1,5 +1,7 @@
 package com.btcontrol.app.ui.screens
 
+import com.btcontrol.app.R
+import com.btcontrol.app.t
 import android.content.res.Configuration
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -99,7 +101,7 @@ fun MouseScreen() {
     val pad: @Composable (Modifier) -> Unit = { m ->
         Box(m) {
             Row(Modifier.fillMaxSize()) {
-                Touchpad(Modifier.weight(1f).fillMaxHeight(), hint = if (airMouse) "Air mouse on — move the device" else if (s.showTouchpadHint) HINT else null)
+                Touchpad(Modifier.weight(1f).fillMaxHeight(), hint = if (airMouse) t(R.string.air_mouse_on_move_the_device_2) else if (s.showTouchpadHint) HINT else null)
                 if (s.showScrollStrip) {
                     Spacer(Modifier.width(6.dp))
                     ScrollStrip(Modifier.fillMaxHeight())
@@ -110,7 +112,7 @@ fun MouseScreen() {
                     onClick = { app.settings.update { it.copy(touchpadOnly = false) } },
                     modifier = Modifier.align(Alignment.BottomStart).padding(8.dp),
                     containerColor = MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.8f),
-                ) { Icon(Icons.Outlined.CropFree, "Show controls") }
+                ) { Icon(Icons.Outlined.CropFree, t(R.string.show_controls)) }
             }
         }
     }
@@ -148,16 +150,16 @@ fun MouseScreen() {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             FilledIconToggleButton(checked = imeVisible, onCheckedChange = { if (imeVisible) capture.hide() else capture.show() }, modifier = b) {
-                Icon(if (imeVisible) Icons.Outlined.KeyboardHide else Icons.Outlined.Keyboard, "Phone keyboard")
+                Icon(if (imeVisible) Icons.Outlined.KeyboardHide else Icons.Outlined.Keyboard, t(R.string.phone_keyboard))
             }
             KeyboardSizeButton(kb, b) { v -> app.settings.update { it.copy(compactKeyboard = v) } }
-            FilledTonalIconButton(onClick = { sendText = true }, modifier = b) { Icon(Icons.AutoMirrored.Outlined.Send, "Send text") }
-            FilledIconToggleButton(checked = airMouse, onCheckedChange = { airMouse = it }, modifier = b) { Icon(Icons.Outlined.NearMe, "Air mouse") }
+            FilledTonalIconButton(onClick = { sendText = true }, modifier = b) { Icon(Icons.AutoMirrored.Outlined.Send, t(R.string.send_text)) }
+            FilledIconToggleButton(checked = airMouse, onCheckedChange = { airMouse = it }, modifier = b) { Icon(Icons.Outlined.NearMe, t(R.string.air_mouse)) }
             FilledIconToggleButton(checked = s.showMouseButtons, onCheckedChange = { v -> app.settings.update { it.copy(showMouseButtons = v) } }, modifier = b) {
-                Icon(Icons.Outlined.Mouse, "Mouse buttons")
+                Icon(Icons.Outlined.Mouse, t(R.string.mouse_buttons))
             }
-            FilledTonalIconButton(onClick = { app.settings.update { it.copy(touchpadOnly = true) } }, modifier = b) { Icon(Icons.Outlined.CropFree, "Touchpad only") }
-            FilledTonalIconButton(onClick = { options = true }, modifier = b) { Icon(Icons.Outlined.Tune, "Touchpad options") }
+            FilledTonalIconButton(onClick = { app.settings.update { it.copy(touchpadOnly = true) } }, modifier = b) { Icon(Icons.Outlined.CropFree, t(R.string.touchpad_only)) }
+            FilledTonalIconButton(onClick = { options = true }, modifier = b) { Icon(Icons.Outlined.Tune, t(R.string.touchpad_options)) }
             LayoutChip(compact = true)
         }
     }
@@ -198,11 +200,11 @@ private fun KeyboardSizeButton(current: String, modifier: Modifier = Modifier, o
     var open by remember { mutableStateOf(false) }
     Box {
         FilledIconToggleButton(checked = current != "off", onCheckedChange = { open = true }, modifier = modifier) {
-            Icon(Icons.Outlined.ViewCompact, "Built-in keyboard")
+            Icon(Icons.Outlined.ViewCompact, t(R.string.built_in_keyboard))
         }
         DropdownMenu(open, onDismissRequest = { open = false }) {
-            Text("Built-in keyboard", style = MaterialTheme.typography.labelMedium, modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp))
-            val options = listOf("off" to "Off", "row" to "Keys row (Esc, Ctrl, arrows…)") + KeyboardSizes.ALL.take(4)
+            Text(t(R.string.built_in_keyboard), style = MaterialTheme.typography.labelMedium, modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp))
+            val options = listOf("off" to t(R.string.off), "row" to t(R.string.keys_row_esc_ctrl_arrows)) + KeyboardSizes.ALL.take(4)
             for ((v, label) in options) {
                 DropdownMenuItem(
                     text = { Text(label) },
@@ -222,22 +224,22 @@ private fun MouseOptionsDialog(s: Settings, onDismiss: () -> Unit) {
     fun set(b: (Settings) -> Settings) = app.settings.update(b)
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Touchpad") },
+        title = { Text(t(R.string.kind_touchpad)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
-                SliderRow("Sensitivity", s.pointerSpeed, 0.2f..5f, { "%.1f×".format(it) }) { v -> set { it.copy(pointerSpeed = v) } }
-                SliderRow("Acceleration", s.pointerAcceleration, 0f..3f, { "%.1f".format(it) }) { v -> set { it.copy(pointerAcceleration = v) } }
-                SliderRow("Scroll amount", s.scrollSpeed, 0.2f..5f, { "%.1f×".format(it) }) { v -> set { it.copy(scrollSpeed = v) } }
-                SliderRow("Air mouse speed", s.airMouseSpeed, 0.2f..4f, { "%.1f×".format(it) }) { v -> set { it.copy(airMouseSpeed = v) } }
-                TextButton(onClick = { calibrate = true }) { Text("Calibrate air mouse") }
-                SwitchRow("Natural scrolling", s.naturalScroll) { v -> set { it.copy(naturalScroll = v) } }
-                SwitchRow("Tap to click", s.tapToClick) { v -> set { it.copy(tapToClick = v) } }
-                SwitchRow("Show help text", s.showTouchpadHint) { v -> set { it.copy(showTouchpadHint = v) } }
-                SwitchRow("Scroll strip", s.showScrollStrip) { v -> set { it.copy(showScrollStrip = v) } }
-                SwitchRow("Mouse buttons", s.showMouseButtons) { v -> set { it.copy(showMouseButtons = v) } }
+                SliderRow(t(R.string.sensitivity), s.pointerSpeed, 0.2f..5f, { "%.1f×".format(it) }) { v -> set { it.copy(pointerSpeed = v) } }
+                SliderRow(t(R.string.acceleration), s.pointerAcceleration, 0f..3f, { "%.1f".format(it) }) { v -> set { it.copy(pointerAcceleration = v) } }
+                SliderRow(t(R.string.scroll_amount), s.scrollSpeed, 0.2f..5f, { "%.1f×".format(it) }) { v -> set { it.copy(scrollSpeed = v) } }
+                SliderRow(t(R.string.air_mouse_speed), s.airMouseSpeed, 0.2f..4f, { "%.1f×".format(it) }) { v -> set { it.copy(airMouseSpeed = v) } }
+                TextButton(onClick = { calibrate = true }) { Text(t(R.string.calibrate_air_mouse)) }
+                SwitchRow(t(R.string.natural_scrolling), s.naturalScroll) { v -> set { it.copy(naturalScroll = v) } }
+                SwitchRow(t(R.string.tap_to_click), s.tapToClick) { v -> set { it.copy(tapToClick = v) } }
+                SwitchRow(t(R.string.show_help_text), s.showTouchpadHint) { v -> set { it.copy(showTouchpadHint = v) } }
+                SwitchRow(t(R.string.kind_scroll_strip), s.showScrollStrip) { v -> set { it.copy(showScrollStrip = v) } }
+                SwitchRow(t(R.string.mouse_buttons), s.showMouseButtons) { v -> set { it.copy(showMouseButtons = v) } }
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Done") } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(t(R.string.done)) } },
     )
 }
 
@@ -259,7 +261,7 @@ fun LayoutChip(compact: Boolean = false) {
             leadingIcon = { Icon(Icons.Outlined.Language, null, Modifier.size(18.dp)) },
         )
         DropdownMenu(expanded = open, onDismissRequest = { open = false }) {
-            Text("Keyboard layout of the PC", style = MaterialTheme.typography.labelMedium, modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp))
+            Text(t(R.string.keyboard_layout_of_the_pc), style = MaterialTheme.typography.labelMedium, modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp))
             for (l in KeyboardLayout.ALL) {
                 DropdownMenuItem(
                     text = { Text(l.name) },

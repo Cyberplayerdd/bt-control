@@ -1,5 +1,7 @@
 package com.btcontrol.app.ui.screens
 
+import com.btcontrol.app.R
+import com.btcontrol.app.t
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -58,21 +60,21 @@ fun TabletScreen() {
     var eraser by rememberSaveable { mutableStateOf(false) }
     val toolbar = settings.showTabletToolbar
 
-    NotchEntry("Pen area: " + if (settings.tabletAspect == "fill") "whole screen" else settings.tabletAspect) {
+    NotchEntry(t(R.string.pen_area_x, if (settings.tabletAspect == "fill") t(R.string.whole_screen) else settings.tabletAspect)) {
         val i = ASPECTS.indexOf(app.settings.value.tabletAspect)
         app.settings.update { it.copy(tabletAspect = ASPECTS[(i + 1) % ASPECTS.size]) }
     }
-    NotchEntry(if (toolbar) "Hide shortcut toolbar" else "Show shortcut toolbar") {
+    NotchEntry(if (toolbar) t(R.string.hide_shortcut_toolbar) else t(R.string.show_shortcut_toolbar)) {
         app.settings.update { it.copy(showTabletToolbar = !it.showTabletToolbar) }
     }
-    NotchEntry(if (eraser) "Eraser mode: ON" else "Eraser mode: off") { eraser = !eraser }
+    NotchEntry(if (eraser) t(R.string.eraser_mode_on) else t(R.string.eraser_mode_off)) { eraser = !eraser }
     NotchEntry(
-        "Fingers: " + when (settings.fingerMode) {
-            FingerMode.DRAW -> "draw"
-            FingerMode.HOVER -> "move cursor, tap = click"
-            FingerMode.GESTURES -> "gestures only"
-            FingerMode.IGNORE -> "ignored"
-        }
+        t(R.string.fingers_x, when (settings.fingerMode) {
+            FingerMode.DRAW -> t(R.string.finger_draw)
+            FingerMode.HOVER -> t(R.string.move_cursor_tap_click)
+            FingerMode.GESTURES -> t(R.string.gestures_only)
+            FingerMode.IGNORE -> t(R.string.finger_ignored)
+        })
     ) {
         val order = listOf(FingerMode.GESTURES, FingerMode.DRAW, FingerMode.HOVER, FingerMode.IGNORE)
         val i = order.indexOf(app.settings.value.fingerMode)
@@ -96,17 +98,17 @@ fun TabletScreen() {
                 verticalArrangement = Arrangement.spacedBy(5.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                ToolKey("Undo", Icons.AutoMirrored.Outlined.Undo, onClick = { hid.shortcut(Key.Z, Mod.LCTRL) })
-                ToolKey("Redo", Icons.AutoMirrored.Outlined.Redo, onClick = { hid.shortcut(Key.Z, Mod.LCTRL or Mod.LSHIFT) })
-                ToolToggle(if (eraser) "Eraser" else "Pen", eraser) { eraser = !eraser }
-                ToolKey("Pan", Icons.Outlined.PanTool, hold = Key.SPACE)
+                ToolKey(t(R.string.undo), Icons.AutoMirrored.Outlined.Undo, onClick = { hid.shortcut(Key.Z, Mod.LCTRL) })
+                ToolKey(t(R.string.redo), Icons.AutoMirrored.Outlined.Redo, onClick = { hid.shortcut(Key.Z, Mod.LCTRL or Mod.LSHIFT) })
+                ToolToggle(if (eraser) t(R.string.eraser) else t(R.string.pen), eraser) { eraser = !eraser }
+                ToolKey(t(R.string.pan), Icons.Outlined.PanTool, hold = Key.SPACE)
                 ToolKey("Ctrl", hold = Key.LEFT_CTRL)
                 ToolKey("Shift", hold = Key.LEFT_SHIFT)
                 ToolKey("Alt", hold = Key.LEFT_ALT)
-                ToolKey("Size −", text = "[", onClick = { hid.tap(Key.LEFT_BRACKET) })
-                ToolKey("Size +", text = "]", onClick = { hid.tap(Key.RIGHT_BRACKET) })
-                ToolKey("Zoom +", Icons.Outlined.ZoomIn, onClick = { hid.tap(Key.KP_PLUS, Mod.LCTRL) })
-                ToolKey("Zoom −", Icons.Outlined.ZoomOut, onClick = { hid.tap(Key.KP_MINUS, Mod.LCTRL) })
+                ToolKey(t(R.string.size), text = "[", onClick = { hid.tap(Key.LEFT_BRACKET) })
+                ToolKey(t(R.string.size_2), text = "]", onClick = { hid.tap(Key.RIGHT_BRACKET) })
+                ToolKey(t(R.string.zoom_2), Icons.Outlined.ZoomIn, onClick = { hid.tap(Key.KP_PLUS, Mod.LCTRL) })
+                ToolKey(t(R.string.zoom), Icons.Outlined.ZoomOut, onClick = { hid.tap(Key.KP_MINUS, Mod.LCTRL) })
             }
         }
         Box(Modifier.weight(1f).fillMaxHeight()) {

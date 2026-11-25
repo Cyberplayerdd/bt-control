@@ -1,5 +1,7 @@
 package com.btcontrol.app.ui.screens
 
+import com.btcontrol.app.R
+import com.btcontrol.app.t
 import android.content.Intent
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -65,27 +67,27 @@ fun ManageLayoutsScreen(onOpen: (String) -> Unit, onEdit: (String) -> Unit) {
         runCatching {
             val text = context.contentResolver.openInputStream(uri)!!.bufferedReader().use { it.readText() }
             repo.importJson(text)
-        }.onSuccess { toast("Imported $it layout(s)") }.onFailure { toast("Not a valid layout file") }
+        }.onSuccess { toast(t(R.string.imported_n_layouts, it)) }.onFailure { toast(t(R.string.not_a_valid_layout_file)) }
     }
     val exportLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
         if (uri == null) return@rememberLauncherForActivityResult
         runCatching {
             context.contentResolver.openOutputStream(uri)!!.bufferedWriter().use { it.write(repo.exportAllJson()) }
-        }.onSuccess { toast("Saved") }.onFailure { toast("Could not save") }
+        }.onSuccess { toast(t(R.string.saved)) }.onFailure { toast(t(R.string.could_not_save)) }
     }
 
     toDelete?.let { l ->
         AlertDialog(
             onDismissRequest = { toDelete = null },
-            title = { Text("Delete “${l.name}”?") },
-            confirmButton = { TextButton(onClick = { repo.delete(l.id); toDelete = null }) { Text("Delete") } },
-            dismissButton = { TextButton(onClick = { toDelete = null }) { Text("Cancel") } },
+            title = { Text(t(R.string.delete_named, l.name)) },
+            confirmButton = { TextButton(onClick = { repo.delete(l.id); toDelete = null }) { Text(t(R.string.delete)) } },
+            dismissButton = { TextButton(onClick = { toDelete = null }) { Text(t(R.string.cancel)) } },
         )
     }
     if (paste) PasteImportDialog(onDismiss = { paste = false }) { text ->
         runCatching { repo.importJson(text) }
-            .onSuccess { toast("Imported $it layout(s)"); paste = false }
-            .onFailure { toast("Not a valid layout") }
+            .onSuccess { toast(t(R.string.imported_n_layouts, it)); paste = false }
+            .onFailure { toast(t(R.string.not_a_valid_layout)) }
     }
 
     LazyColumn(
@@ -95,14 +97,14 @@ fun ManageLayoutsScreen(onOpen: (String) -> Unit, onEdit: (String) -> Unit) {
     ) {
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
-                AssistChip(onClick = { onEdit("new") }, label = { Text("New") }, leadingIcon = { Icon(Icons.Outlined.Add, null) })
-                AssistChip(onClick = { importLauncher.launch(arrayOf("application/json", "text/plain", "*/*")) }, label = { Text("Import") }, leadingIcon = { Icon(Icons.Outlined.FileUpload, null) })
-                AssistChip(onClick = { exportLauncher.launch("bt-control-layouts.json") }, label = { Text("Export all") }, leadingIcon = { Icon(Icons.Outlined.FileDownload, null) })
-                MoreMenu(onPaste = { paste = true }, onRestore = { repo.restoreExamples(); toast("Examples added") })
+                AssistChip(onClick = { onEdit("new") }, label = { Text(t(R.string.new_label)) }, leadingIcon = { Icon(Icons.Outlined.Add, null) })
+                AssistChip(onClick = { importLauncher.launch(arrayOf("application/json", "text/plain", "*/*")) }, label = { Text(t(R.string.import_label)) }, leadingIcon = { Icon(Icons.Outlined.FileUpload, null) })
+                AssistChip(onClick = { exportLauncher.launch("bt-control-layouts.json") }, label = { Text(t(R.string.export_all)) }, leadingIcon = { Icon(Icons.Outlined.FileDownload, null) })
+                MoreMenu(onPaste = { paste = true }, onRestore = { repo.restoreExamples(); toast(t(R.string.examples_added)) })
             }
         }
         if (layouts.isEmpty()) item {
-            Text("No layouts yet. Tap New to build one from buttons, shortcuts, text macros and touchpads.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(t(R.string.no_layouts_yet_tap_new_to_build_one_from_b), color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         items(layouts, key = { it.id }) { l ->
             Card(onClick = { onOpen(l.id) }, modifier = Modifier.fillMaxWidth()) {
@@ -110,20 +112,20 @@ fun ManageLayoutsScreen(onOpen: (String) -> Unit, onEdit: (String) -> Unit) {
                     Column(Modifier.weight(1f)) {
                         Text(l.name, style = MaterialTheme.typography.titleMedium)
                         Text(
-                            "${l.items.size} items · ${l.columns} columns" + if (l.landscape) " · landscape" else "",
+                            t(R.string.layout_summary, l.items.size, l.columns) + if (l.landscape) t(R.string.layout_summary_landscape) else "",
                             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
-                    IconButton(onClick = { repo.move(l.id, -1) }) { Icon(Icons.Outlined.KeyboardArrowUp, "Move up") }
-                    IconButton(onClick = { repo.move(l.id, 1) }) { Icon(Icons.Outlined.KeyboardArrowDown, "Move down") }
-                    IconButton(onClick = { onEdit(l.id) }) { Icon(Icons.Outlined.Edit, "Edit") }
+                    IconButton(onClick = { repo.move(l.id, -1) }) { Icon(Icons.Outlined.KeyboardArrowUp, t(R.string.move_up)) }
+                    IconButton(onClick = { repo.move(l.id, 1) }) { Icon(Icons.Outlined.KeyboardArrowDown, t(R.string.move_down)) }
+                    IconButton(onClick = { onEdit(l.id) }) { Icon(Icons.Outlined.Edit, t(R.string.edit)) }
                     LayoutMenu(
                         onDuplicate = { repo.duplicate(l.id) },
                         onShare = {
                             val json = repo.exportJson(l.id) ?: return@LayoutMenu
                             val send = Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, json)
-                                .putExtra(Intent.EXTRA_SUBJECT, "BT Control layout: ${l.name}")
-                            context.startActivity(Intent.createChooser(send, "Share layout"))
+                                .putExtra(Intent.EXTRA_SUBJECT, t(R.string.share_layout_subject, l.name))
+                            context.startActivity(Intent.createChooser(send, t(R.string.share_layout)))
                         },
                         onDelete = { toDelete = l },
                     )
@@ -137,11 +139,11 @@ fun ManageLayoutsScreen(onOpen: (String) -> Unit, onEdit: (String) -> Unit) {
 private fun LayoutMenu(onDuplicate: () -> Unit, onShare: () -> Unit, onDelete: () -> Unit) {
     var open by remember { mutableStateOf(false) }
     Box {
-        IconButton(onClick = { open = true }) { Icon(Icons.Outlined.MoreVert, "More") }
+        IconButton(onClick = { open = true }) { Icon(Icons.Outlined.MoreVert, t(R.string.more)) }
         DropdownMenu(open, onDismissRequest = { open = false }) {
-            DropdownMenuItem(text = { Text("Duplicate") }, leadingIcon = { Icon(Icons.Outlined.ContentCopy, null) }, onClick = { open = false; onDuplicate() })
-            DropdownMenuItem(text = { Text("Share as text") }, leadingIcon = { Icon(Icons.Outlined.Share, null) }, onClick = { open = false; onShare() })
-            DropdownMenuItem(text = { Text("Delete") }, leadingIcon = { Icon(Icons.Outlined.Delete, null) }, onClick = { open = false; onDelete() })
+            DropdownMenuItem(text = { Text(t(R.string.duplicate)) }, leadingIcon = { Icon(Icons.Outlined.ContentCopy, null) }, onClick = { open = false; onDuplicate() })
+            DropdownMenuItem(text = { Text(t(R.string.share_as_text)) }, leadingIcon = { Icon(Icons.Outlined.Share, null) }, onClick = { open = false; onShare() })
+            DropdownMenuItem(text = { Text(t(R.string.delete)) }, leadingIcon = { Icon(Icons.Outlined.Delete, null) }, onClick = { open = false; onDelete() })
         }
     }
 }
@@ -150,10 +152,10 @@ private fun LayoutMenu(onDuplicate: () -> Unit, onShare: () -> Unit, onDelete: (
 private fun MoreMenu(onPaste: () -> Unit, onRestore: () -> Unit) {
     var open by remember { mutableStateOf(false) }
     Box {
-        IconButton(onClick = { open = true }) { Icon(Icons.Outlined.MoreVert, "More") }
+        IconButton(onClick = { open = true }) { Icon(Icons.Outlined.MoreVert, t(R.string.more)) }
         DropdownMenu(open, onDismissRequest = { open = false }) {
-            DropdownMenuItem(text = { Text("Paste layout text") }, onClick = { open = false; onPaste() })
-            DropdownMenuItem(text = { Text("Add example layouts") }, onClick = { open = false; onRestore() })
+            DropdownMenuItem(text = { Text(t(R.string.paste_layout_text)) }, onClick = { open = false; onPaste() })
+            DropdownMenuItem(text = { Text(t(R.string.add_example_layouts)) }, onClick = { open = false; onRestore() })
         }
     }
 }
@@ -163,15 +165,15 @@ private fun PasteImportDialog(onDismiss: () -> Unit, onImport: (String) -> Unit)
     var text by remember { mutableStateOf("") }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Import layout") },
+        title = { Text(t(R.string.import_layout)) },
         text = {
             OutlinedTextField(
                 value = text, onValueChange = { text = it },
-                placeholder = { Text("Paste the layout text (JSON) here") },
+                placeholder = { Text(t(R.string.paste_the_layout_text_json_here)) },
                 modifier = Modifier.fillMaxWidth().heightIn(min = 160.dp),
             )
         },
-        confirmButton = { TextButton(onClick = { onImport(text) }) { Text("Import") } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+        confirmButton = { TextButton(onClick = { onImport(text) }) { Text(t(R.string.import_label)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(t(R.string.cancel)) } },
     )
 }

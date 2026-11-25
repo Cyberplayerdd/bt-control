@@ -1,5 +1,7 @@
 package com.btcontrol.app.ui.screens
 
+import com.btcontrol.app.R
+import com.btcontrol.app.t
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -74,56 +76,56 @@ fun MediaScreen() {
     var confirmSystem by remember { mutableIntStateOf(0) }
     val landscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
     // "Show names" lives in the top bar with the other options.
-    ScreenActionEntry("Show button names", Icons.AutoMirrored.Outlined.Label, checked = labels) {
+    ScreenActionEntry(t(R.string.show_button_names), Icons.AutoMirrored.Outlined.Label, checked = labels) {
         app.settings.update { it.copy(mediaShowLabels = !it.mediaShowLabels) }
     }
 
     if (confirmSystem != 0) {
         AlertDialog(
             onDismissRequest = { confirmSystem = 0 },
-            title = { Text(if (confirmSystem == SystemKey.SLEEP) "Put the computer to sleep?" else "Press the computer's power button?") },
-            text = { Text(if (confirmSystem == SystemKey.SLEEP) "The connection drops while it sleeps." else "Windows does whatever the power button is set to (often shut down or sleep).") },
-            confirmButton = { TextButton(onClick = { hid.systemTap(confirmSystem); confirmSystem = 0 }) { Text("Yes") } },
-            dismissButton = { TextButton(onClick = { confirmSystem = 0 }) { Text("Cancel") } },
+            title = { Text(if (confirmSystem == SystemKey.SLEEP) t(R.string.put_the_computer_to_sleep) else t(R.string.press_the_computer_s_power_button)) },
+            text = { Text(if (confirmSystem == SystemKey.SLEEP) t(R.string.the_connection_drops_while_it_sleeps) else t(R.string.windows_does_whatever_the_power_button_is)) },
+            confirmButton = { TextButton(onClick = { hid.systemTap(confirmSystem); confirmSystem = 0 }) { Text(t(R.string.yes)) } },
+            dismissButton = { TextButton(onClick = { confirmSystem = 0 }) { Text(t(R.string.cancel)) } },
         )
     }
 
     val playback: @Composable ColumnScope.() -> Unit = {
         MediaRow(Modifier.weight(1.3f)) {
-            CButton(Consumer.PREV_TRACK, Icons.Outlined.SkipPrevious, "Previous", labels)
-            CButton(Consumer.PLAY_PAUSE, Icons.Outlined.PlayArrow, "Play / Pause", labels, weight = 1.4f, primary = true)
-            CButton(Consumer.NEXT_TRACK, Icons.Outlined.SkipNext, "Next", labels)
+            CButton(Consumer.PREV_TRACK, Icons.Outlined.SkipPrevious, t(R.string.previous), labels)
+            CButton(Consumer.PLAY_PAUSE, Icons.Outlined.PlayArrow, t(R.string.play_pause), labels, weight = 1.4f, primary = true)
+            CButton(Consumer.NEXT_TRACK, Icons.Outlined.SkipNext, t(R.string.next), labels)
         }
         MediaRow(Modifier.weight(1f)) {
-            CButton(Consumer.REWIND, Icons.Outlined.FastRewind, "Rewind", labels)
-            CButton(Consumer.STOP, Icons.Outlined.Stop, "Stop", labels)
-            CButton(Consumer.FAST_FORWARD, Icons.Outlined.FastForward, "Forward", labels)
+            CButton(Consumer.REWIND, Icons.Outlined.FastRewind, t(R.string.rewind), labels)
+            CButton(Consumer.STOP, Icons.Outlined.Stop, t(R.string.stop), labels)
+            CButton(Consumer.FAST_FORWARD, Icons.Outlined.FastForward, t(R.string.forward), labels)
         }
         MediaRow(Modifier.weight(1.2f)) {
-            CButton(Consumer.VOLUME_DOWN, Icons.AutoMirrored.Outlined.VolumeDown, "Volume −", labels)
-            CButton(Consumer.MUTE, Icons.AutoMirrored.Outlined.VolumeOff, "Mute", labels)
-            CButton(Consumer.VOLUME_UP, Icons.AutoMirrored.Outlined.VolumeUp, "Volume +", labels)
+            CButton(Consumer.VOLUME_DOWN, Icons.AutoMirrored.Outlined.VolumeDown, t(R.string.volume_2), labels)
+            CButton(Consumer.MUTE, Icons.AutoMirrored.Outlined.VolumeOff, t(R.string.mute), labels)
+            CButton(Consumer.VOLUME_UP, Icons.AutoMirrored.Outlined.VolumeUp, t(R.string.volume), labels)
         }
     }
     val others: @Composable ColumnScope.() -> Unit = {
         MediaRow(Modifier.weight(1f)) {
-            CButton(Consumer.BRIGHTNESS_DOWN, Icons.Outlined.BrightnessLow, "Brightness −", labels)
-            CButton(Consumer.BRIGHTNESS_UP, Icons.Outlined.BrightnessHigh, "Brightness +", labels)
-            AButton(Icons.Outlined.Bedtime, "Sleep", labels) { confirmSystem = SystemKey.SLEEP }
-            AButton(Icons.Outlined.PowerSettingsNew, "Power", labels, tint = Color(0xFFC62828)) { confirmSystem = SystemKey.POWER }
+            CButton(Consumer.BRIGHTNESS_DOWN, Icons.Outlined.BrightnessLow, t(R.string.brightness_2), labels)
+            CButton(Consumer.BRIGHTNESS_UP, Icons.Outlined.BrightnessHigh, t(R.string.brightness), labels)
+            AButton(Icons.Outlined.Bedtime, t(R.string.sleep), labels) { confirmSystem = SystemKey.SLEEP }
+            AButton(Icons.Outlined.PowerSettingsNew, t(R.string.power), labels, tint = Color(0xFFC62828)) { confirmSystem = SystemKey.POWER }
         }
         MediaRow(Modifier.weight(1f)) {
-            CButton(Consumer.AC_BACK, Icons.AutoMirrored.Outlined.ArrowBack, "Back", labels)
-            CButton(Consumer.AC_FORWARD, Icons.AutoMirrored.Outlined.ArrowForward, "Forward", labels)
-            CButton(Consumer.AC_REFRESH, Icons.Outlined.Refresh, "Refresh", labels)
+            CButton(Consumer.AC_BACK, Icons.AutoMirrored.Outlined.ArrowBack, t(R.string.back), labels)
+            CButton(Consumer.AC_FORWARD, Icons.AutoMirrored.Outlined.ArrowForward, t(R.string.forward), labels)
+            CButton(Consumer.AC_REFRESH, Icons.Outlined.Refresh, t(R.string.refresh), labels)
             CButton(Consumer.AC_HOME, Icons.Outlined.Home, "Home", labels)
         }
         MediaRow(Modifier.weight(1f)) {
-            CButton(Consumer.AC_SEARCH, Icons.Outlined.Search, "Search", labels)
-            CButton(Consumer.BROWSER, Icons.Outlined.Public, "Browser", labels)
-            CButton(Consumer.EMAIL, Icons.Outlined.Mail, "Mail", labels)
-            CButton(Consumer.CALCULATOR, Icons.Outlined.Calculate, "Calculator", labels)
-            CButton(Consumer.FILE_EXPLORER, Icons.Outlined.Folder, "Files", labels)
+            CButton(Consumer.AC_SEARCH, Icons.Outlined.Search, t(R.string.search), labels)
+            CButton(Consumer.BROWSER, Icons.Outlined.Public, t(R.string.browser), labels)
+            CButton(Consumer.EMAIL, Icons.Outlined.Mail, t(R.string.mail), labels)
+            CButton(Consumer.CALCULATOR, Icons.Outlined.Calculate, t(R.string.calculator), labels)
+            CButton(Consumer.FILE_EXPLORER, Icons.Outlined.Folder, t(R.string.files), labels)
         }
     }
 

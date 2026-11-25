@@ -1,5 +1,7 @@
 package com.btcontrol.app.ui
 
+import com.btcontrol.app.R
+import com.btcontrol.app.t
 import android.app.Activity
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -111,19 +113,21 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.rememberUpdatedState
 import kotlinx.coroutines.launch
 
-enum class Dest(val route: String, val title: String, val icon: ImageVector, val immersive: Boolean = false) {
-    MOUSE("mouse", "Mouse & keyboard", Icons.Outlined.Mouse),
-    MEDIA("media", "Multimedia", Icons.Outlined.LiveTv),
-    REMOTE("remote", "Remote", Icons.Outlined.SettingsRemote),
-    KEYBOARD("keyboard", "Computer keyboard", Icons.Outlined.Keyboard),
-    NUMPAD("numpad", "Numeric keypad", Icons.Outlined.Dialpad),
-    PRESENTATION("presentation", "Presentation", Icons.Outlined.Slideshow),
-    SCANNER("scanner", "Code scanner", Icons.Outlined.QrCodeScanner),
-    GAMEPAD("gamepad", "Gamepad", Icons.Outlined.SportsEsports, immersive = true),
-    TABLET("tablet", "Drawing tablet", Icons.Outlined.Brush, immersive = true),
-    LAYOUTS("layouts", "Manage layouts", Icons.Outlined.Build),
-    DEVICES("devices", "Bluetooth devices", Icons.Outlined.Devices),
-    SETTINGS("settings", "Settings", Icons.Outlined.Settings);
+enum class Dest(val route: String, private val titleRes: Int, val icon: ImageVector, val immersive: Boolean = false) {
+    MOUSE("mouse", R.string.nav_mouse, Icons.Outlined.Mouse),
+    MEDIA("media", R.string.nav_media, Icons.Outlined.LiveTv),
+    REMOTE("remote", R.string.nav_remote, Icons.Outlined.SettingsRemote),
+    KEYBOARD("keyboard", R.string.nav_keyboard, Icons.Outlined.Keyboard),
+    NUMPAD("numpad", R.string.nav_numpad, Icons.Outlined.Dialpad),
+    PRESENTATION("presentation", R.string.nav_presentation, Icons.Outlined.Slideshow),
+    SCANNER("scanner", R.string.nav_scanner, Icons.Outlined.QrCodeScanner),
+    GAMEPAD("gamepad", R.string.nav_gamepad, Icons.Outlined.SportsEsports, immersive = true),
+    TABLET("tablet", R.string.nav_tablet, Icons.Outlined.Brush, immersive = true),
+    LAYOUTS("layouts", R.string.nav_layouts, Icons.Outlined.Build),
+    DEVICES("devices", R.string.nav_devices, Icons.Outlined.Devices),
+    SETTINGS("settings", R.string.nav_settings, Icons.Outlined.Settings);
+
+    val title: String get() = t(titleRes)
 
     companion object {
         val CONTROLS = listOf(MOUSE, MEDIA, REMOTE, KEYBOARD, NUMPAD, PRESENTATION, SCANNER, GAMEPAD, TABLET)
@@ -193,7 +197,7 @@ fun AppRoot(actions: AppActions) {
         "portrait" -> Icons.Outlined.StayCurrentPortrait
         else -> Icons.Outlined.ScreenRotation
     }
-    val orientationName = when (orientation) { "landscape" -> "Landscape"; "portrait" -> "Portrait"; else -> "Auto-rotate" }
+    val orientationName = when (orientation) { "landscape" -> t(R.string.landscape); "portrait" -> t(R.string.portrait); else -> t(R.string.auto_rotate) }
 
     val title = when {
         dest != null -> dest.title
@@ -273,7 +277,7 @@ fun AppRoot(actions: AppActions) {
                         title = { Text(title, maxLines = 1, overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.SemiBold) },
                         navigationIcon = {
                             if (stack.size > 1) {
-                                IconButton(onClick = { pop() }) { Icon(Icons.AutoMirrored.Outlined.ArrowBack, "Back") }
+                                IconButton(onClick = { pop() }) { Icon(Icons.AutoMirrored.Outlined.ArrowBack, t(R.string.back)) }
                             } else {
                                 IconButton(onClick = { scope.launch { drawerState.open() } }) { Icon(Icons.Outlined.Menu, "Menu") }
                             }
@@ -285,7 +289,7 @@ fun AppRoot(actions: AppActions) {
                                 RotationButton(orientation, orientationIcon, ::setOrientation)
                             }
                             if (dest in Dest.CONTROLS || route.startsWith("layout/")) {
-                                IconButton(onClick = { userFullscreen = true }) { Icon(Icons.Outlined.Fullscreen, "Fullscreen") }
+                                IconButton(onClick = { userFullscreen = true }) { Icon(Icons.Outlined.Fullscreen, t(R.string.fullscreen)) }
                             }
                         },
                     )
@@ -330,18 +334,18 @@ private fun DrawerContent(
                 Text(statusText(btState), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             HorizontalDivider(Modifier.padding(horizontal = 28.dp, vertical = 8.dp))
-            DrawerSection("Controls")
+            DrawerSection(t(R.string.controls))
             for (d in Dest.CONTROLS) DrawerItem(d.title, d.icon, current == d.route) { onNavigate(d.route) }
             HorizontalDivider(Modifier.padding(horizontal = 28.dp, vertical = 8.dp))
-            DrawerSection("Custom layouts")
+            DrawerSection(t(R.string.custom_layouts))
             for ((id, name) in layouts) DrawerItem(name, Icons.Outlined.Widgets, current == "layout/$id") { onNavigate("layout/$id") }
-            DrawerItem("New layout", Icons.Outlined.Add, false, onNewLayout)
+            DrawerItem(t(R.string.new_layout), Icons.Outlined.Add, false, onNewLayout)
             DrawerItem(Dest.LAYOUTS.title, Dest.LAYOUTS.icon, current == Dest.LAYOUTS.route) { onNavigate(Dest.LAYOUTS.route) }
             HorizontalDivider(Modifier.padding(horizontal = 28.dp, vertical = 8.dp))
-            DrawerSection("Configuration")
+            DrawerSection(t(R.string.configuration))
             DrawerItem(Dest.DEVICES.title, Dest.DEVICES.icon, current == Dest.DEVICES.route) { onNavigate(Dest.DEVICES.route) }
             DrawerItem(Dest.SETTINGS.title, Dest.SETTINGS.icon, current == Dest.SETTINGS.route) { onNavigate(Dest.SETTINGS.route) }
-            DrawerItem("About & help", Icons.AutoMirrored.Outlined.HelpOutline, false, onHelp)
+            DrawerItem(t(R.string.about_help), Icons.AutoMirrored.Outlined.HelpOutline, false, onHelp)
         }
     }
 }
@@ -368,15 +372,15 @@ private fun DrawerItem(label: String, icon: ImageVector, selected: Boolean, onCl
 }
 
 fun statusText(s: HidState): String = when (s.status) {
-    HidStatus.CONNECTED -> "Connected to ${s.deviceName}"
-    HidStatus.CONNECTING -> "Connecting to ${s.deviceName ?: "computer"}…"
-    HidStatus.READY -> "Not connected"
-    HidStatus.BLUETOOTH_OFF -> "Bluetooth is off"
-    HidStatus.NO_PERMISSION -> "Bluetooth permission needed"
-    HidStatus.NO_BLUETOOTH -> "No Bluetooth on this device"
-    HidStatus.UNSUPPORTED -> "HID profile not supported"
-    HidStatus.REGISTRATION_FAILED -> "HID registration failed"
-    HidStatus.STARTING -> "Starting…"
+    HidStatus.CONNECTED -> t(R.string.status_connected_to, s.deviceName ?: "")
+    HidStatus.CONNECTING -> t(R.string.status_connecting_to, s.deviceName ?: t(R.string.computer))
+    HidStatus.READY -> t(R.string.not_connected)
+    HidStatus.BLUETOOTH_OFF -> t(R.string.bluetooth_is_off)
+    HidStatus.NO_PERMISSION -> t(R.string.bluetooth_permission_needed)
+    HidStatus.NO_BLUETOOTH -> t(R.string.no_bluetooth_on_this_device)
+    HidStatus.UNSUPPORTED -> t(R.string.hid_profile_not_supported)
+    HidStatus.REGISTRATION_FAILED -> t(R.string.hid_registration_failed)
+    HidStatus.STARTING -> t(R.string.starting)
 }
 
 @Composable
@@ -405,7 +409,7 @@ private fun ConnectionChip(s: HidState, onClick: () -> Unit) {
             if (compact) return@Row
             Spacer(Modifier.width(6.dp))
             Text(
-                if (s.connected) (s.deviceName ?: "Connected") else if (s.status == HidStatus.CONNECTING) "Connecting…" else "Offline",
+                if (s.connected) (s.deviceName ?: t(R.string.connected)) else if (s.status == HidStatus.CONNECTING) t(R.string.connecting) else t(R.string.offline),
                 style = MaterialTheme.typography.labelMedium,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -420,17 +424,17 @@ private fun ConnectionBanner(s: HidState, actions: AppActions, openDevices: () -
     if (s.status == HidStatus.CONNECTED) return
     val app = BtControlApp.instance
     val (text, button, action) = when (s.status) {
-        HidStatus.NO_PERMISSION -> Triple("Bluetooth permission is required.", "Grant", actions.requestPermissions)
-        HidStatus.BLUETOOTH_OFF -> Triple("Bluetooth is off.", "Turn on", actions.enableBluetooth)
-        HidStatus.REGISTRATION_FAILED -> Triple(s.message ?: "HID registration failed.", "Retry", { app.bt.reRegister() })
+        HidStatus.NO_PERMISSION -> Triple(t(R.string.bluetooth_permission_is_required), t(R.string.grant), actions.requestPermissions)
+        HidStatus.BLUETOOTH_OFF -> Triple(t(R.string.bluetooth_is_off_2), t(R.string.turn_on), actions.enableBluetooth)
+        HidStatus.REGISTRATION_FAILED -> Triple(s.message ?: t(R.string.hid_registration_failed_2), t(R.string.retry), { app.bt.reRegister() })
         HidStatus.READY -> {
             val last = app.settings.value.lastDeviceAddress
             val name = app.bt.bondedDevices.value.firstOrNull { it.address == last }?.name
-            if (name != null) Triple("Not connected.", "Connect to $name", { app.bt.connect(last!!) })
-            else Triple("Not connected to a computer.", "Pair", openDevices)
+            if (name != null) Triple(t(R.string.not_connected_2), t(R.string.connect_to, name), { app.bt.connect(last!!) })
+            else Triple(t(R.string.not_connected_to_a_computer), t(R.string.pair), openDevices)
         }
-        HidStatus.CONNECTING -> Triple("Connecting to ${s.deviceName ?: "computer"}…", "Devices", openDevices)
-        else -> Triple(statusText(s), "Devices", openDevices)
+        HidStatus.CONNECTING -> Triple(t(R.string.status_connecting_to, s.deviceName ?: t(R.string.computer)), t(R.string.devices), openDevices)
+        else -> Triple(statusText(s), t(R.string.devices), openDevices)
     }
     Surface(color = MaterialTheme.colorScheme.secondaryContainer, modifier = Modifier.fillMaxWidth()) {
         Row(Modifier.padding(start = 16.dp, end = 8.dp).height(44.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -505,7 +509,7 @@ private fun TopBarScreenActions() {
     if (textOnly.isNotEmpty()) {
         var open by remember { mutableStateOf(false) }
         Box {
-            IconButton(onClick = { open = true }) { Icon(Icons.Outlined.MoreVert, "More options") }
+            IconButton(onClick = { open = true }) { Icon(Icons.Outlined.MoreVert, t(R.string.more_options)) }
             DropdownMenu(open, onDismissRequest = { open = false }) {
                 for (a in textOnly) DropdownMenuItem(text = { Text(a.label) }, onClick = { a.onClick() })
             }
@@ -567,16 +571,16 @@ private fun Notch(
                 )
             }
             if (onExitFullscreen != null) {
-                DropdownMenuItem(text = { Text("Exit fullscreen") }, leadingIcon = { Icon(Icons.Outlined.FullscreenExit, null) }, onClick = { open = false; onExitFullscreen() })
+                DropdownMenuItem(text = { Text(t(R.string.exit_fullscreen)) }, leadingIcon = { Icon(Icons.Outlined.FullscreenExit, null) }, onClick = { open = false; onExitFullscreen() })
             }
         }
     }
 }
 
-private val ROTATION_CHOICES = listOf(
-    Triple("auto", "Auto-rotate", Icons.Outlined.ScreenRotation),
-    Triple("landscape", "Lock landscape", Icons.Outlined.StayCurrentLandscape),
-    Triple("portrait", "Lock portrait", Icons.Outlined.StayCurrentPortrait),
+private val ROTATION_CHOICES get() = listOf(
+    Triple("auto", t(R.string.auto_rotate), Icons.Outlined.ScreenRotation),
+    Triple("landscape", t(R.string.lock_landscape), Icons.Outlined.StayCurrentLandscape),
+    Triple("portrait", t(R.string.lock_portrait), Icons.Outlined.StayCurrentPortrait),
 )
 
 /** Top-bar button: choose how this tab rotates (remembered per tab). */
@@ -584,10 +588,10 @@ private val ROTATION_CHOICES = listOf(
 private fun RotationButton(current: String, icon: ImageVector, onSelect: (String) -> Unit) {
     var open by remember { mutableStateOf(false) }
     Box {
-        IconButton(onClick = { open = true }) { Icon(icon, "Rotation of this tab") }
+        IconButton(onClick = { open = true }) { Icon(icon, t(R.string.rotation_of_this_tab)) }
         DropdownMenu(open, onDismissRequest = { open = false }) {
             Text(
-                "Rotation of this tab",
+                t(R.string.rotation_of_this_tab),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),

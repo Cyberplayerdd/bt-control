@@ -1,5 +1,7 @@
 package com.btcontrol.app.ui.screens
 
+import com.btcontrol.app.R
+import com.btcontrol.app.t
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -33,7 +35,7 @@ fun NumpadScreen() {
 
     Column(Modifier.fillMaxSize().padding(12.dp).navigationBarsPadding(), verticalArrangement = Arrangement.spacedBy(gap)) {
         Text(
-            if (numOn) "Num Lock is ON on the computer" else "Num Lock is OFF — digits act as arrows/Home/End",
+            if (numOn) t(R.string.num_lock_is_on_on_the_computer) else t(R.string.num_lock_is_off_digits_act_as_arrows_home),
             style = MaterialTheme.typography.bodySmall,
             color = if (numOn) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error,
         )

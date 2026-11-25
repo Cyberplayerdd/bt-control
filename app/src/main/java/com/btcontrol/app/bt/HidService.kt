@@ -1,5 +1,6 @@
 package com.btcontrol.app.bt
 
+import com.btcontrol.app.t
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -71,8 +72,8 @@ class HidService : Service() {
     private fun createChannel() {
         val nm = getSystemService(NotificationManager::class.java) ?: return
         nm.createNotificationChannel(
-            NotificationChannel(CHANNEL, "Bluetooth connection", NotificationManager.IMPORTANCE_LOW).apply {
-                description = "Shown while BT Control is acting as a keyboard/mouse"
+            NotificationChannel(CHANNEL, t(R.string.bluetooth_connection), NotificationManager.IMPORTANCE_LOW).apply {
+                description = t(R.string.shown_while_bt_control_is_acting_as_a_keyb)
                 setShowBadge(false)
             }
         )
@@ -84,11 +85,11 @@ class HidService : Service() {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
         val text = when (st.status) {
-            HidStatus.CONNECTED -> "Connected to ${st.deviceName}"
-            HidStatus.CONNECTING -> "Connecting to ${st.deviceName ?: "computer"}…"
-            HidStatus.READY -> "Ready — waiting for a computer"
-            HidStatus.BLUETOOTH_OFF -> "Bluetooth is off"
-            else -> "Starting…"
+            HidStatus.CONNECTED -> t(R.string.status_connected_to, st.deviceName ?: "")
+            HidStatus.CONNECTING -> t(R.string.status_connecting_to, st.deviceName ?: t(R.string.computer))
+            HidStatus.READY -> t(R.string.ready_waiting_for_a_computer)
+            HidStatus.BLUETOOTH_OFF -> t(R.string.bluetooth_is_off)
+            else -> t(R.string.starting)
         }
         val b = NotificationCompat.Builder(this, CHANNEL)
             .setSmallIcon(R.drawable.ic_stat_bt)
@@ -99,8 +100,8 @@ class HidService : Service() {
             .setContentIntent(open)
             .setCategory(NotificationCompat.CATEGORY_SERVICE)
             .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
-        if (st.connected) b.addAction(0, "Disconnect", action(ACTION_DISCONNECT, 1))
-        b.addAction(0, "Quit", action(ACTION_QUIT, 2))
+        if (st.connected) b.addAction(0, t(R.string.disconnect), action(ACTION_DISCONNECT, 1))
+        b.addAction(0, t(R.string.quit), action(ACTION_QUIT, 2))
         return b.build()
     }
 

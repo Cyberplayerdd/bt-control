@@ -1,5 +1,7 @@
 package com.btcontrol.app.ui.components
 
+import com.btcontrol.app.R
+import com.btcontrol.app.t
 import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -42,7 +44,7 @@ import kotlin.math.min
  *  - 3 fingers tap: middle click
  */
 @Composable
-fun Touchpad(modifier: Modifier = Modifier, hint: String? = "Touchpad") {
+fun Touchpad(modifier: Modifier = Modifier, hint: String? = t(R.string.kind_touchpad)) {
     val app = BtControlApp.instance
     val hid = app.hid
     val settings by app.settings.flow.collectAsStateWithLifecycle()

@@ -1,5 +1,7 @@
 package com.btcontrol.app.ui.screens
 
+import com.btcontrol.app.R
+import com.btcontrol.app.t
 import android.content.pm.ActivityInfo
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -53,7 +55,7 @@ fun CustomLayoutScreen(id: String, onEdit: (String) -> Unit) {
     val layouts by app.layouts.layouts.collectAsStateWithLifecycle()
     val layout = layouts.firstOrNull { it.id == id }
     if (layout == null) {
-        CenteredHint("This layout no longer exists.", Modifier.fillMaxSize().padding(32.dp))
+        CenteredHint(t(R.string.this_layout_no_longer_exists), Modifier.fillMaxSize().padding(32.dp))
         return
     }
     Box(Modifier.fillMaxSize()) {
@@ -65,7 +67,7 @@ fun CustomLayoutScreen(id: String, onEdit: (String) -> Unit) {
             onClick = { onEdit(layout.id) },
             modifier = Modifier.align(Alignment.BottomEnd).navigationBarsPadding().padding(16.dp).size(48.dp),
             containerColor = MaterialTheme.colorScheme.secondaryContainer,
-        ) { Icon(Icons.Outlined.Edit, "Edit layout") }
+        ) { Icon(Icons.Outlined.Edit, t(R.string.edit_layout)) }
     }
 }
 
@@ -122,7 +124,7 @@ fun LayoutGrid(
         Box(Modifier.fillMaxWidth().height(totalH)) {
             if (placed.isEmpty()) {
                 Text(
-                    "Empty layout — add buttons in the editor.",
+                    t(R.string.empty_layout_add_buttons_in_the_editor),
                     modifier = Modifier.align(Alignment.Center),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -207,9 +209,9 @@ private fun EditPreviewItem(item: LayoutItem, selected: Boolean, modifier: Modif
     ) {
         when (item.kind) {
             ItemKind.BUTTON -> ItemLabel(item, color)
-            ItemKind.TOUCHPAD -> Text("Touchpad", color = MaterialTheme.colorScheme.onSurfaceVariant)
-            ItemKind.SCROLL_STRIP -> Text("Scroll", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            ItemKind.SPACER -> Text("(space)", fontSize = 11.sp, color = MaterialTheme.colorScheme.outline)
+            ItemKind.TOUCHPAD -> Text(t(R.string.kind_touchpad), color = MaterialTheme.colorScheme.onSurfaceVariant)
+            ItemKind.SCROLL_STRIP -> Text(t(R.string.scroll), fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            ItemKind.SPACER -> Text(t(R.string.space), fontSize = 11.sp, color = MaterialTheme.colorScheme.outline)
         }
     }
 }

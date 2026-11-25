@@ -1,5 +1,7 @@
 package com.btcontrol.app.ui.screens
 
+import com.btcontrol.app.R
+import com.btcontrol.app.t
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -62,24 +64,24 @@ import com.btcontrol.app.hid.MouseButton
 import com.btcontrol.app.hid.SystemKey
 import com.btcontrol.app.ui.components.Dropdown
 
-private val KEY_CHOICES: List<Pair<Int, String>> = buildList {
+private val KEY_CHOICES: List<Pair<Int, String>> get() = buildList {
     for (i in 0 until 26) add(Key.A + i to ('A' + i).toString())
     for (i in 1..9) add(Key.N1 + i - 1 to "$i")
     add(Key.N0 to "0")
     Key.NAMES.filterKeys { !Key.isModifier(it) }.forEach { (k, v) -> add(k to v) }
-    add(Key.LEFT_GUI to "Win (alone)")
-    add(Key.MINUS to "-  (US key position)")
-    add(Key.EQUAL to "=  (US key position)")
-    add(Key.LEFT_BRACKET to "[  (US key position)")
-    add(Key.RIGHT_BRACKET to "]  (US key position)")
-    add(Key.BACKSLASH to "\\  (US key position)")
-    add(Key.SEMICOLON to ";  (US key position)")
-    add(Key.APOSTROPHE to "'  (US key position)")
-    add(Key.GRAVE to "`  (US key position)")
-    add(Key.COMMA to ",  (US key position)")
-    add(Key.PERIOD to ".  (US key position)")
-    add(Key.SLASH to "/  (US key position)")
-    add(Key.NON_US_BACKSLASH to "<>  (ISO extra key)")
+    add(Key.LEFT_GUI to t(R.string.win_alone))
+    add(Key.MINUS to t(R.string.us_key_position, "-"))
+    add(Key.EQUAL to t(R.string.us_key_position, "="))
+    add(Key.LEFT_BRACKET to t(R.string.us_key_position, "["))
+    add(Key.RIGHT_BRACKET to t(R.string.us_key_position, "]"))
+    add(Key.BACKSLASH to t(R.string.us_key_position, "\\"))
+    add(Key.SEMICOLON to t(R.string.us_key_position, ";"))
+    add(Key.APOSTROPHE to t(R.string.us_key_position, "'"))
+    add(Key.GRAVE to t(R.string.us_key_position, "`"))
+    add(Key.COMMA to t(R.string.us_key_position, ","))
+    add(Key.PERIOD to t(R.string.us_key_position, "."))
+    add(Key.SLASH to t(R.string.us_key_position, "/"))
+    add(Key.NON_US_BACKSLASH to t(R.string.iso_extra_key, "<>"))
 }
 
 private val PALETTE = listOf(
@@ -90,7 +92,7 @@ private val PALETTE = listOf(
 fun LayoutEditorScreen(id: String, onDone: () -> Unit) {
     val repo = BtControlApp.instance.layouts
     val isNew = id == "new"
-    var draft by remember(id) { mutableStateOf(repo.get(id) ?: CustomLayout(name = "My layout")) }
+    var draft by remember(id) { mutableStateOf(repo.get(id) ?: CustomLayout(name = t(R.string.my_layout))) }
     var editing by remember { mutableStateOf<LayoutItem?>(null) }
     var confirmDelete by remember { mutableStateOf(false) }
 
@@ -104,8 +106,8 @@ fun LayoutEditorScreen(id: String, onDone: () -> Unit) {
     fun addItem(kind: ItemKind) {
         val item = when (kind) {
             ItemKind.BUTTON -> LayoutItem(label = "", action = ButtonAction(ActionType.KEY, key = Key.ENTER))
-            ItemKind.TOUCHPAD -> LayoutItem(label = "Touchpad", kind = kind, colSpan = draft.columns, rowSpan = 3)
-            ItemKind.SCROLL_STRIP -> LayoutItem(label = "Scroll", kind = kind, rowSpan = 3)
+            ItemKind.TOUCHPAD -> LayoutItem(label = t(R.string.kind_touchpad), kind = kind, colSpan = draft.columns, rowSpan = 3)
+            ItemKind.SCROLL_STRIP -> LayoutItem(label = t(R.string.scroll), kind = kind, rowSpan = 3)
             ItemKind.SPACER -> LayoutItem(kind = kind)
         }
         draft = draft.copy(items = draft.items + item)
@@ -124,9 +126,9 @@ fun LayoutEditorScreen(id: String, onDone: () -> Unit) {
     if (confirmDelete) {
         AlertDialog(
             onDismissRequest = { confirmDelete = false },
-            title = { Text("Delete “${draft.name}”?") },
-            confirmButton = { TextButton(onClick = { repo.delete(draft.id); confirmDelete = false; onDone() }) { Text("Delete") } },
-            dismissButton = { TextButton(onClick = { confirmDelete = false }) { Text("Cancel") } },
+            title = { Text(t(R.string.delete_named, draft.name)) },
+            confirmButton = { TextButton(onClick = { repo.delete(draft.id); confirmDelete = false; onDone() }) { Text(t(R.string.delete)) } },
+            dismissButton = { TextButton(onClick = { confirmDelete = false }) { Text(t(R.string.cancel)) } },
         )
     }
 
@@ -135,37 +137,37 @@ fun LayoutEditorScreen(id: String, onDone: () -> Unit) {
             OutlinedTextField(
                 value = draft.name,
                 onValueChange = { draft = draft.copy(name = it) },
-                label = { Text("Layout name") },
+                label = { Text(t(R.string.layout_name)) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
             )
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Columns", Modifier.weight(1f))
+                Text(t(R.string.columns), Modifier.weight(1f))
                 Stepper(draft.columns, 1..8) { draft = draft.copy(columns = it) }
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Row height", Modifier.weight(1f))
+                Text(t(R.string.row_height), Modifier.weight(1f))
                 Stepper(draft.rowHeightDp, 40..160, step = 8, suffix = " dp") { draft = draft.copy(rowHeightDp = it) }
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Landscape", Modifier.weight(1f))
+                Text(t(R.string.landscape), Modifier.weight(1f))
                 androidx.compose.material3.Switch(checked = draft.landscape, onCheckedChange = { draft = draft.copy(landscape = it) })
             }
             HorizontalDivider()
-            Text("Preview — tap an item to edit it", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(t(R.string.preview_tap_an_item_to_edit_it), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
             Box(
                 Modifier.fillMaxWidth().border(1.dp, MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(16.dp)).padding(10.dp)
             ) {
                 LayoutGrid(draft, editing = true, selectedId = editing?.id, onSelect = { editing = it })
             }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
-                AddChip("Button") { addItem(ItemKind.BUTTON) }
-                AddChip("Touchpad") { addItem(ItemKind.TOUCHPAD) }
-                AddChip("Scroll") { addItem(ItemKind.SCROLL_STRIP) }
-                AddChip("Space") { addItem(ItemKind.SPACER) }
+                AddChip(t(R.string.kind_button)) { addItem(ItemKind.BUTTON) }
+                AddChip(t(R.string.kind_touchpad)) { addItem(ItemKind.TOUCHPAD) }
+                AddChip(t(R.string.scroll)) { addItem(ItemKind.SCROLL_STRIP) }
+                AddChip(t(R.string.space_2)) { addItem(ItemKind.SPACER) }
             }
             HorizontalDivider()
-            Text("Items (order = placement order)", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(t(R.string.items_order_placement_order), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
             draft.items.forEachIndexed { i, item ->
                 Row(
                     Modifier.fillMaxWidth().clickable { editing = item }.padding(vertical = 2.dp),
@@ -177,19 +179,19 @@ fun LayoutEditorScreen(id: String, onDone: () -> Unit) {
                             maxLines = 1, overflow = TextOverflow.Ellipsis,
                         )
                         Text(
-                            "${item.kind.name.lowercase().replace('_', ' ')} · ${item.colSpan}×${item.rowSpan}" +
+                            "${kindName(item.kind)} · ${item.colSpan}×${item.rowSpan}" +
                                 if (item.kind == ItemKind.BUTTON) " · ${item.action.describe()}" else "",
                             fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis,
                         )
                     }
                     IconButton(enabled = i > 0, onClick = {
                         val l = draft.items.toMutableList(); l.add(i - 1, l.removeAt(i)); draft = draft.copy(items = l)
-                    }) { Icon(Icons.Outlined.KeyboardArrowUp, "Move up") }
+                    }) { Icon(Icons.Outlined.KeyboardArrowUp, t(R.string.move_up)) }
                     IconButton(enabled = i < draft.items.lastIndex, onClick = {
                         val l = draft.items.toMutableList(); l.add(i + 1, l.removeAt(i)); draft = draft.copy(items = l)
-                    }) { Icon(Icons.Outlined.KeyboardArrowDown, "Move down") }
+                    }) { Icon(Icons.Outlined.KeyboardArrowDown, t(R.string.move_down)) }
                     IconButton(onClick = { draft = draft.copy(items = draft.items.filterNot { it.id == item.id }) }) {
-                        Icon(Icons.Outlined.Delete, "Delete")
+                        Icon(Icons.Outlined.Delete, t(R.string.delete))
                     }
                 }
             }
@@ -200,13 +202,13 @@ fun LayoutEditorScreen(id: String, onDone: () -> Unit) {
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                if (!isNew) TextButton(onClick = { confirmDelete = true }) { Text("Delete layout", color = MaterialTheme.colorScheme.error) }
+                if (!isNew) TextButton(onClick = { confirmDelete = true }) { Text(t(R.string.delete_layout), color = MaterialTheme.colorScheme.error) }
                 Spacer(Modifier.weight(1f))
-                OutlinedButton(onClick = onDone) { Text("Cancel") }
+                OutlinedButton(onClick = onDone) { Text(t(R.string.cancel)) }
                 Button(onClick = {
-                    repo.save(draft.copy(name = draft.name.ifBlank { "Layout" }))
+                    repo.save(draft.copy(name = draft.name.ifBlank { t(R.string.layout) }))
                     onDone()
-                }) { Text("Save") }
+                }) { Text(t(R.string.save)) }
             }
         }
     }
@@ -220,9 +222,9 @@ private fun AddChip(label: String, onClick: () -> Unit) {
 @Composable
 private fun Stepper(value: Int, range: IntRange, step: Int = 1, suffix: String = "", onChange: (Int) -> Unit) {
     Row(verticalAlignment = Alignment.CenterVertically) {
-        IconButton(onClick = { onChange((value - step).coerceIn(range)) }, enabled = value > range.first) { Icon(Icons.Outlined.Remove, "Less") }
+        IconButton(onClick = { onChange((value - step).coerceIn(range)) }, enabled = value > range.first) { Icon(Icons.Outlined.Remove, t(R.string.less)) }
         Text("$value$suffix", modifier = Modifier.width(64.dp), textAlign = androidx.compose.ui.text.style.TextAlign.Center)
-        IconButton(onClick = { onChange((value + step).coerceIn(range)) }, enabled = value < range.last) { Icon(Icons.Outlined.Add, "More") }
+        IconButton(onClick = { onChange((value + step).coerceIn(range)) }, enabled = value < range.last) { Icon(Icons.Outlined.Add, t(R.string.more)) }
     }
 }
 
@@ -237,29 +239,29 @@ private fun ItemEditorDialog(
     var it by remember(item.id) { mutableStateOf(item) }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Edit item") },
+        title = { Text(t(R.string.edit_item)) },
         text = {
             Column(Modifier.heightIn(max = 560.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Dropdown(
                     it.kind,
-                    listOf(ItemKind.BUTTON to "Button", ItemKind.TOUCHPAD to "Touchpad", ItemKind.SCROLL_STRIP to "Scroll strip", ItemKind.SPACER to "Empty space"),
+                    listOf(ItemKind.BUTTON to t(R.string.kind_button), ItemKind.TOUCHPAD to t(R.string.kind_touchpad), ItemKind.SCROLL_STRIP to t(R.string.kind_scroll_strip), ItemKind.SPACER to t(R.string.kind_space)),
                 ) { k -> it = it.copy(kind = k) }
                 if (it.kind != ItemKind.SPACER) {
                     OutlinedTextField(
                         value = it.label, onValueChange = { v -> it = it.copy(label = v) },
-                        label = { Text("Label") }, singleLine = true, modifier = Modifier.fillMaxWidth(),
+                        label = { Text(t(R.string.label)) }, singleLine = true, modifier = Modifier.fillMaxWidth(),
                     )
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("Width (columns)", Modifier.weight(1f))
+                    Text(t(R.string.width_columns), Modifier.weight(1f))
                     Stepper(it.colSpan, 1..columns) { v -> it = it.copy(colSpan = v) }
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("Height (rows)", Modifier.weight(1f))
+                    Text(t(R.string.height_rows), Modifier.weight(1f))
                     Stepper(it.rowSpan, 1..12) { v -> it = it.copy(rowSpan = v) }
                 }
                 if (it.kind == ItemKind.BUTTON) {
-                    Text("Colour", style = MaterialTheme.typography.labelLarge)
+                    Text(t(R.string.colour), style = MaterialTheme.typography.labelLarge)
                     Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                         for (c in PALETTE) {
                             val col = if (c == 0L) MaterialTheme.colorScheme.surfaceContainerHigh else Color(c.toInt())
@@ -271,7 +273,7 @@ private fun ItemEditorDialog(
                         }
                     }
                     HorizontalDivider()
-                    Text("Action", style = MaterialTheme.typography.labelLarge)
+                    Text(t(R.string.action), style = MaterialTheme.typography.labelLarge)
                     ActionEditor(it.action, allowMacro = true) { a -> it = it.copy(action = a) }
                 }
             }
@@ -279,8 +281,8 @@ private fun ItemEditorDialog(
         confirmButton = { TextButton(onClick = { onSave(it) }) { Text("OK") } },
         dismissButton = {
             Row {
-                TextButton(onClick = onDelete) { Text("Delete", color = MaterialTheme.colorScheme.error) }
-                TextButton(onClick = onDismiss) { Text("Cancel") }
+                TextButton(onClick = onDelete) { Text(t(R.string.delete), color = MaterialTheme.colorScheme.error) }
+                TextButton(onClick = onDismiss) { Text(t(R.string.cancel)) }
             }
         },
     )
@@ -289,13 +291,13 @@ private fun ItemEditorDialog(
 @Composable
 private fun ActionEditor(action: ButtonAction, allowMacro: Boolean, onChange: (ButtonAction) -> Unit) {
     val types = buildList {
-        add(ActionType.KEY to "Key / shortcut")
-        add(ActionType.TEXT to "Type text")
-        add(ActionType.MEDIA to "Media / app key")
-        add(ActionType.MOUSE to "Mouse button")
-        add(ActionType.SYSTEM to "Power / sleep")
-        if (allowMacro) add(ActionType.MACRO to "Macro (sequence)")
-        add(ActionType.NONE to "Nothing")
+        add(ActionType.KEY to t(R.string.key_shortcut))
+        add(ActionType.TEXT to t(R.string.type_text))
+        add(ActionType.MEDIA to t(R.string.media_app_key))
+        add(ActionType.MOUSE to t(R.string.mouse_button))
+        add(ActionType.SYSTEM to t(R.string.power_sleep))
+        if (allowMacro) add(ActionType.MACRO to t(R.string.macro_sequence))
+        add(ActionType.NONE to t(R.string.nothing))
     }
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Dropdown(action.type, types) { t ->
@@ -321,19 +323,19 @@ private fun ActionEditor(action: ButtonAction, allowMacro: Boolean, onChange: (B
                 }
                 Dropdown(action.key, KEY_CHOICES) { k -> onChange(action.copy(key = k)) }
                 Text(
-                    "Letters follow your PC keyboard layout, so Ctrl+Z is always undo.",
+                    t(R.string.letters_follow_your_pc_keyboard_layout_so),
                     style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
             ActionType.TEXT -> OutlinedTextField(
                 value = action.text, onValueChange = { onChange(action.copy(text = it)) },
-                label = { Text("Text (use a new line for Enter)") }, modifier = Modifier.fillMaxWidth(),
+                label = { Text(t(R.string.text_use_a_new_line_for_enter)) }, modifier = Modifier.fillMaxWidth(),
             )
             ActionType.MEDIA -> Dropdown(action.usage, Consumer.NAMES.toList()) { onChange(action.copy(usage = it)) }
             ActionType.MOUSE -> Dropdown(action.usage, MouseButton.NAMES.toList()) { onChange(action.copy(usage = it)) }
             ActionType.SYSTEM -> Dropdown(
                 action.usage,
-                listOf(SystemKey.SLEEP to "Sleep", SystemKey.POWER to "Power button", SystemKey.WAKE to "Wake up"),
+                listOf(SystemKey.SLEEP to t(R.string.sleep), SystemKey.POWER to t(R.string.power_button), SystemKey.WAKE to t(R.string.wake_up)),
             ) { onChange(action.copy(usage = it)) }
             ActionType.MACRO -> MacroEditor(action, onChange)
             ActionType.NONE -> Unit
@@ -349,9 +351,9 @@ private fun MacroEditor(action: ButtonAction, onChange: (ButtonAction) -> Unit) 
                 Modifier.fillMaxWidth().border(1.dp, MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(12.dp)).padding(8.dp),
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("Step ${i + 1}", style = MaterialTheme.typography.labelMedium, modifier = Modifier.weight(1f))
+                    Text(t(R.string.step_n, i + 1), style = MaterialTheme.typography.labelMedium, modifier = Modifier.weight(1f))
                     IconButton(onClick = { onChange(action.copy(steps = action.steps.filterIndexed { j, _ -> j != i })) }) {
-                        Icon(Icons.Outlined.Delete, "Remove step")
+                        Icon(Icons.Outlined.Delete, t(R.string.remove_step))
                     }
                 }
                 ActionEditor(step, allowMacro = false) { s ->
@@ -361,10 +363,17 @@ private fun MacroEditor(action: ButtonAction, onChange: (ButtonAction) -> Unit) 
         }
         OutlinedButton(onClick = {
             onChange(action.copy(steps = action.steps + ButtonAction(ActionType.KEY, key = Key.ENTER)))
-        }) { Icon(Icons.Outlined.Add, null); Text("Add step") }
+        }) { Icon(Icons.Outlined.Add, null); Text(t(R.string.add_step)) }
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("Delay between steps", Modifier.weight(1f))
+            Text(t(R.string.delay_between_steps), Modifier.weight(1f))
             Stepper(action.delayMs, 0..2000, step = 20, suffix = " ms") { onChange(action.copy(delayMs = it)) }
         }
     }
+}
+
+private fun kindName(k: ItemKind) = when (k) {
+    ItemKind.BUTTON -> t(R.string.kind_button)
+    ItemKind.TOUCHPAD -> t(R.string.kind_touchpad)
+    ItemKind.SCROLL_STRIP -> t(R.string.kind_scroll_strip)
+    ItemKind.SPACER -> t(R.string.kind_space)
 }

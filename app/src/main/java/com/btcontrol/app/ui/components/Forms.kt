@@ -1,5 +1,7 @@
 package com.btcontrol.app.ui.components
 
+import com.btcontrol.app.R
+import com.btcontrol.app.t
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -122,7 +124,7 @@ fun <T> ChoiceRow(title: String, current: T, options: List<Pair<T, String>>, sub
                     }
                 }
             },
-            confirmButton = { TextButton(onClick = { open = false }) { Text("Close") } },
+            confirmButton = { TextButton(onClick = { open = false }) { Text(t(R.string.close)) } },
         )
     }
 }
@@ -134,7 +136,7 @@ fun <T> Dropdown(current: T, options: List<Pair<T, String>>, modifier: Modifier 
     Box(modifier) {
         OutlinedButton(onClick = { open = true }, modifier = Modifier.fillMaxWidth()) {
             Text(
-                options.firstOrNull { it.first == current }?.second ?: "Choose…",
+                options.firstOrNull { it.first == current }?.second ?: t(R.string.choose),
                 modifier = Modifier.weight(1f),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,

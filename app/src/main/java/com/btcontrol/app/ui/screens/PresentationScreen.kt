@@ -1,5 +1,7 @@
 package com.btcontrol.app.ui.screens
 
+import com.btcontrol.app.R
+import com.btcontrol.app.t
 import android.content.Context
 import android.os.Build
 import android.os.SystemClock
@@ -113,7 +115,7 @@ fun PresentationScreen() {
         HoldButton(m, onRelease = { prev() }, shape = RoundedCornerShape(24.dp)) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Icon(Icons.AutoMirrored.Outlined.ArrowBack, null, Modifier.size(40.dp))
-                Text("Previous")
+                Text(t(R.string.previous))
             }
         }
     }
@@ -121,16 +123,16 @@ fun PresentationScreen() {
         HoldButton(m, onRelease = { next() }, shape = RoundedCornerShape(24.dp), containerColor = MaterialTheme.colorScheme.primaryContainer) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Icon(Icons.AutoMirrored.Outlined.ArrowForward, null, Modifier.size(56.dp))
-                Text("Next", style = MaterialTheme.typography.titleMedium)
+                Text(t(R.string.next), style = MaterialTheme.typography.titleMedium)
             }
         }
     }
     val shortcuts: @Composable (Modifier) -> Unit = { m ->
         Row(m, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            Shortcut("Start", "F5") { hid.tap(Key.F5) }
-            Shortcut("From here", "⇧F5") { hid.tap(Key.F5, Mod.LSHIFT) }
-            Shortcut("Black", "B") { hid.shortcut(Key.B) }
-            Shortcut("White", "W") { hid.shortcut(Key.W) }
+            Shortcut(t(R.string.start), "F5") { hid.tap(Key.F5) }
+            Shortcut(t(R.string.from_here), "⇧F5") { hid.tap(Key.F5, Mod.LSHIFT) }
+            Shortcut(t(R.string.black), "B") { hid.shortcut(Key.B) }
+            Shortcut(t(R.string.white), "W") { hid.shortcut(Key.W) }
             Shortcut("End", "Esc") { hid.tap(Key.ESC) }
         }
     }
@@ -151,24 +153,24 @@ fun PresentationScreen() {
                 },
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(6.dp)) {
-                    AutoText("● Laser pointer", maxSize = 16.sp, fontWeight = FontWeight.SemiBold, color = Color(0xFFC62828))
-                    AutoText("Hold & point the device at the screen", maxSize = 11.sp)
+                    AutoText(t(R.string.laser_pointer), maxSize = 16.sp, fontWeight = FontWeight.SemiBold, color = Color(0xFFC62828))
+                    AutoText(t(R.string.hold_point_the_device_at_the_screen), maxSize = 11.sp)
                 }
             }
             Column(Modifier.weight(0.6f).fillMaxHeight(), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                KeyCap("Pen (Ctrl+P)", Modifier.weight(1f).fillMaxWidth(), fontSize = 13.sp, onRelease = { hid.shortcut(Key.P, Mod.LCTRL) })
-                KeyCap("Erase ink (E)", Modifier.weight(1f).fillMaxWidth(), fontSize = 13.sp, onRelease = { hid.shortcut(Key.E) })
+                KeyCap(t(R.string.pen_ctrl_p), Modifier.weight(1f).fillMaxWidth(), fontSize = 13.sp, onRelease = { hid.shortcut(Key.P, Mod.LCTRL) })
+                KeyCap(t(R.string.erase_ink_e), Modifier.weight(1f).fillMaxWidth(), fontSize = 13.sp, onRelease = { hid.shortcut(Key.E) })
             }
         }
     }
     val options: @Composable () -> Unit = {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            FilterChip(selected = pptShortcuts, onClick = { pptShortcuts = !pptShortcuts }, label = { Text("PowerPoint laser keys") })
+            FilterChip(selected = pptShortcuts, onClick = { pptShortcuts = !pptShortcuts }, label = { Text(t(R.string.powerpoint_laser_keys)) })
             Spacer(Modifier.width(8.dp))
-            FilterChip(selected = false, onClick = { calibrate = true }, label = { Text("Calibrate laser") })
+            FilterChip(selected = false, onClick = { calibrate = true }, label = { Text(t(R.string.calibrate_laser)) })
             Spacer(Modifier.width(8.dp))
             if (settings.presentationVolumeKeys) {
-                Text("Volume keys = slides", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(t(R.string.volume_keys_slides), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
     }
@@ -239,7 +241,7 @@ private fun PresentationTimer(alertMinutes: Int, context: Context) {
                     color = if (over) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
-                    if (alertMinutes > 0) "Vibrates at $alertMinutes min" else "Timer (set an alert in Settings)",
+                    if (alertMinutes > 0) t(R.string.vibrates_at, alertMinutes) else t(R.string.timer_set_an_alert_in_settings),
                     style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
@@ -252,11 +254,11 @@ private fun PresentationTimer(alertMinutes: Int, context: Context) {
                     now = startedAt
                     running = true
                 }
-            }) { Icon(if (running) Icons.Outlined.Pause else Icons.Outlined.PlayArrow, "Start/pause") }
+            }) { Icon(if (running) Icons.Outlined.Pause else Icons.Outlined.PlayArrow, t(R.string.start_pause)) }
             Spacer(Modifier.width(8.dp))
             FilledTonalIconButton(onClick = {
                 running = false; accumulated = 0; alerted = false
-            }) { Icon(Icons.Outlined.RestartAlt, "Reset") }
+            }) { Icon(Icons.Outlined.RestartAlt, t(R.string.reset)) }
         }
     }
 }

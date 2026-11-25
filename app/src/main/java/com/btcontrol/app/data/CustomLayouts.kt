@@ -1,5 +1,7 @@
 package com.btcontrol.app.data
 
+import com.btcontrol.app.R
+import com.btcontrol.app.t
 import android.content.Context
 import com.btcontrol.app.hid.Consumer
 import com.btcontrol.app.hid.HidController
@@ -35,13 +37,13 @@ data class ButtonAction(
     val delayMs: Int = 60,
 ) {
     fun describe(): String = when (type) {
-        ActionType.NONE -> "Nothing"
+        ActionType.NONE -> t(R.string.nothing)
         ActionType.KEY -> listOfNotNull(Mod.describe(mods).ifEmpty { null }, keyName(key)).joinToString("+")
-        ActionType.TEXT -> "Type “${text.replace("\n", "⏎")}”"
+        ActionType.TEXT -> t(R.string.action_type_text, text.replace("\n", "⏎"))
         ActionType.MEDIA -> Consumer.NAMES[usage] ?: "Media 0x%X".format(usage)
-        ActionType.MOUSE -> MouseButton.NAMES[usage] ?: "Mouse"
-        ActionType.SYSTEM -> when (usage) { 1 -> "Power"; 2 -> "Sleep"; else -> "Wake" }
-        ActionType.MACRO -> "Macro (${steps.size} steps)"
+        ActionType.MOUSE -> MouseButton.NAMES[usage] ?: t(R.string.mouse)
+        ActionType.SYSTEM -> when (usage) { 1 -> t(R.string.power); 2 -> t(R.string.sleep); else -> t(R.string.wake) }
+        ActionType.MACRO -> t(R.string.action_macro_steps, steps.size)
     }
 
     companion object {
@@ -73,7 +75,7 @@ data class LayoutItem(
 @Serializable
 data class CustomLayout(
     val id: String = UUID.randomUUID().toString(),
-    val name: String = "New layout",
+    val name: String = t(R.string.new_layout),
     val columns: Int = 4,
     val rowHeightDp: Int = 72,
     val landscape: Boolean = false,
@@ -181,7 +183,7 @@ class LayoutRepository(context: Context) {
         val src = get(id) ?: return null
         val copy = src.copy(
             id = UUID.randomUUID().toString(),
-            name = src.name + " (copy)",
+            name = src.name + t(R.string.copy),
             items = src.items.map { it.copy(id = UUID.randomUUID().toString()) },
         )
         save(copy)
@@ -229,42 +231,42 @@ object DefaultLayouts {
     fun all(): List<CustomLayout> = listOf(windows(), video(), browser())
 
     private fun windows() = CustomLayout(
-        name = "Windows shortcuts", columns = 4, rowHeightDp = 64,
+        name = t(R.string.windows_shortcuts), columns = 4, rowHeightDp = 64,
         items = listOf(
-            key("Alt+Tab", Key.TAB, Mod.LALT), key("Desktop", Key.D, Mod.LGUI),
-            key("Explorer", Key.E, Mod.LGUI), key("Lock", Key.L, Mod.LGUI, color = 0xFFB3261EL),
-            key("Copy", Key.C, Mod.LCTRL), key("Paste", Key.V, Mod.LCTRL),
-            key("Undo", Key.Z, Mod.LCTRL), key("Redo", Key.Y, Mod.LCTRL),
-            key("Screenshot", Key.S, Mod.LGUI or Mod.LSHIFT), key("Task mgr", Key.ESC, Mod.LCTRL or Mod.LSHIFT),
-            key("Close", Key.F4, Mod.LALT), key("Start", Key.LEFT_GUI),
-            LayoutItem(label = "Touchpad", kind = ItemKind.TOUCHPAD, colSpan = 4, rowSpan = 4),
-            LayoutItem(label = "Left", action = ButtonAction(ActionType.MOUSE, usage = MouseButton.LEFT), colSpan = 2),
-            LayoutItem(label = "Right", action = ButtonAction(ActionType.MOUSE, usage = MouseButton.RIGHT), colSpan = 2),
+            key("Alt+Tab", Key.TAB, Mod.LALT), key(t(R.string.desktop), Key.D, Mod.LGUI),
+            key(t(R.string.explorer), Key.E, Mod.LGUI), key(t(R.string.lock), Key.L, Mod.LGUI, color = 0xFFB3261EL),
+            key(t(R.string.copy_2), Key.C, Mod.LCTRL), key(t(R.string.paste), Key.V, Mod.LCTRL),
+            key(t(R.string.undo), Key.Z, Mod.LCTRL), key(t(R.string.redo), Key.Y, Mod.LCTRL),
+            key(t(R.string.screenshot), Key.S, Mod.LGUI or Mod.LSHIFT), key(t(R.string.task_mgr), Key.ESC, Mod.LCTRL or Mod.LSHIFT),
+            key(t(R.string.close), Key.F4, Mod.LALT), key(t(R.string.start), Key.LEFT_GUI),
+            LayoutItem(label = t(R.string.kind_touchpad), kind = ItemKind.TOUCHPAD, colSpan = 4, rowSpan = 4),
+            LayoutItem(label = t(R.string.left), action = ButtonAction(ActionType.MOUSE, usage = MouseButton.LEFT), colSpan = 2),
+            LayoutItem(label = t(R.string.right), action = ButtonAction(ActionType.MOUSE, usage = MouseButton.RIGHT), colSpan = 2),
         ),
     )
 
     private fun video() = CustomLayout(
-        name = "Video player", columns = 3, rowHeightDp = 80,
+        name = t(R.string.video_player), columns = 3, rowHeightDp = 80,
         items = listOf(
-            key("Fullscreen", Key.F), key("Play / Pause", Key.SPACE, color = 0xFF2E7D32L), key("Mute", Key.M),
-            key("−10 s", Key.LEFT), key("Volume +", Key.UP), key("+10 s", Key.RIGHT),
-            media("Prev", Consumer.PREV_TRACK), key("Volume −", Key.DOWN), media("Next", Consumer.NEXT_TRACK),
-            key("Exit fullscreen", Key.ESC, span = 3),
+            key(t(R.string.fullscreen), Key.F), key(t(R.string.play_pause), Key.SPACE, color = 0xFF2E7D32L), key(t(R.string.mute), Key.M),
+            key("−10 s", Key.LEFT), key(t(R.string.volume), Key.UP), key("+10 s", Key.RIGHT),
+            media(t(R.string.prev), Consumer.PREV_TRACK), key(t(R.string.volume_2), Key.DOWN), media(t(R.string.next), Consumer.NEXT_TRACK),
+            key(t(R.string.exit_fullscreen), Key.ESC, span = 3),
         ),
     )
 
     private fun browser() = CustomLayout(
-        name = "Web browser", columns = 4, rowHeightDp = 64,
+        name = t(R.string.web_browser), columns = 4, rowHeightDp = 64,
         items = listOf(
-            media("Back", Consumer.AC_BACK), media("Forward", Consumer.AC_FORWARD),
-            key("Reload", Key.F5), key("Address", Key.L, Mod.LCTRL),
-            key("New tab", Key.T, Mod.LCTRL), key("Close tab", Key.W, Mod.LCTRL),
-            key("Prev tab", Key.TAB, Mod.LCTRL or Mod.LSHIFT), key("Next tab", Key.TAB, Mod.LCTRL),
-            key("Zoom −", Key.KP_MINUS, Mod.LCTRL), key("Zoom 100%", Key.N0, Mod.LCTRL),
-            key("Zoom +", Key.KP_PLUS, Mod.LCTRL), key("Fullscreen", Key.F11),
-            LayoutItem(label = "Touchpad", kind = ItemKind.TOUCHPAD, colSpan = 3, rowSpan = 4),
-            LayoutItem(label = "Scroll", kind = ItemKind.SCROLL_STRIP, colSpan = 1, rowSpan = 4),
-            key("Page up", Key.PAGE_UP, span = 2), key("Page down", Key.PAGE_DOWN, span = 2),
+            media(t(R.string.back), Consumer.AC_BACK), media(t(R.string.forward), Consumer.AC_FORWARD),
+            key(t(R.string.reload), Key.F5), key(t(R.string.address), Key.L, Mod.LCTRL),
+            key(t(R.string.new_tab), Key.T, Mod.LCTRL), key(t(R.string.close_tab), Key.W, Mod.LCTRL),
+            key(t(R.string.prev_tab), Key.TAB, Mod.LCTRL or Mod.LSHIFT), key(t(R.string.next_tab), Key.TAB, Mod.LCTRL),
+            key(t(R.string.zoom), Key.KP_MINUS, Mod.LCTRL), key(t(R.string.zoom_100), Key.N0, Mod.LCTRL),
+            key(t(R.string.zoom_2), Key.KP_PLUS, Mod.LCTRL), key(t(R.string.fullscreen), Key.F11),
+            LayoutItem(label = t(R.string.kind_touchpad), kind = ItemKind.TOUCHPAD, colSpan = 3, rowSpan = 4),
+            LayoutItem(label = t(R.string.scroll), kind = ItemKind.SCROLL_STRIP, colSpan = 1, rowSpan = 4),
+            key(t(R.string.page_up), Key.PAGE_UP, span = 2), key(t(R.string.page_down), Key.PAGE_DOWN, span = 2),
         ),
     )
 }

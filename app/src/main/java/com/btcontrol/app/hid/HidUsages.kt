@@ -1,5 +1,8 @@
 package com.btcontrol.app.hid
 
+import com.btcontrol.app.R
+import com.btcontrol.app.t
+
 /** HID usage IDs (USB HID Usage Tables 1.4). */
 object Key {
     // Letters (positions on a US QWERTY keyboard)
@@ -164,16 +167,16 @@ object Consumer {
     const val AC_ZOOM_IN = 0x22D
     const val AC_ZOOM_OUT = 0x22E
 
-    val NAMES: Map<Int, String> = linkedMapOf(
-        PLAY_PAUSE to "Play / Pause", NEXT_TRACK to "Next track", PREV_TRACK to "Previous track",
-        STOP to "Stop", FAST_FORWARD to "Fast forward", REWIND to "Rewind", RECORD to "Record",
-        EJECT to "Eject", MUTE to "Mute", VOLUME_UP to "Volume +", VOLUME_DOWN to "Volume −",
-        BRIGHTNESS_UP to "Brightness +", BRIGHTNESS_DOWN to "Brightness −",
-        MEDIA_PLAYER to "Media player", EMAIL to "Mail", CALCULATOR to "Calculator",
-        FILE_EXPLORER to "File explorer", BROWSER to "Web browser", AC_SEARCH to "Search",
-        AC_HOME to "Browser home", AC_BACK to "Browser back", AC_FORWARD to "Browser forward",
-        AC_STOP to "Browser stop", AC_REFRESH to "Refresh", AC_BOOKMARKS to "Bookmarks",
-        AC_ZOOM_IN to "Zoom in", AC_ZOOM_OUT to "Zoom out",
+    val NAMES: Map<Int, String> get() = linkedMapOf(
+        PLAY_PAUSE to t(R.string.play_pause), NEXT_TRACK to t(R.string.next_track), PREV_TRACK to t(R.string.previous_track),
+        STOP to t(R.string.stop), FAST_FORWARD to t(R.string.fast_forward), REWIND to t(R.string.rewind), RECORD to t(R.string.record),
+        EJECT to t(R.string.eject), MUTE to t(R.string.mute), VOLUME_UP to t(R.string.volume), VOLUME_DOWN to t(R.string.volume_2),
+        BRIGHTNESS_UP to t(R.string.brightness), BRIGHTNESS_DOWN to t(R.string.brightness_2),
+        MEDIA_PLAYER to t(R.string.media_player), EMAIL to t(R.string.mail), CALCULATOR to t(R.string.calculator),
+        FILE_EXPLORER to t(R.string.file_explorer), BROWSER to t(R.string.web_browser), AC_SEARCH to t(R.string.search),
+        AC_HOME to t(R.string.browser_home), AC_BACK to t(R.string.browser_back), AC_FORWARD to t(R.string.browser_forward),
+        AC_STOP to t(R.string.browser_stop), AC_REFRESH to t(R.string.refresh), AC_BOOKMARKS to t(R.string.bookmarks),
+        AC_ZOOM_IN to t(R.string.zoom_in), AC_ZOOM_OUT to t(R.string.zoom_out),
     )
 }
 
@@ -192,8 +195,8 @@ object MouseButton {
     const val BACK = 0x08
     const val FORWARD = 0x10
 
-    val NAMES = linkedMapOf(LEFT to "Left click", RIGHT to "Right click", MIDDLE to "Middle click",
-        BACK to "Back button", FORWARD to "Forward button")
+    val NAMES get() = linkedMapOf(LEFT to t(R.string.left_click), RIGHT to t(R.string.right_click), MIDDLE to t(R.string.middle_click),
+        BACK to t(R.string.back_button), FORWARD to t(R.string.forward_button))
 }
 
 /** Gamepad button indexes (bit positions in report 4). */

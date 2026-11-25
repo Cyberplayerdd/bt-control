@@ -1,5 +1,7 @@
 package com.btcontrol.app.ui.screens
 
+import com.btcontrol.app.R
+import com.btcontrol.app.t
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
@@ -426,10 +428,8 @@ class PenInputView(context: Context) : View(context) {
         while (trail.isNotEmpty() && now - trail.first().t > life) trail.removeFirst()
         if (trail.isEmpty() && hoverX < 0) {
             // Wrapped to the area width so nothing is cut off in portrait.
-            val hint = "Pen area → PC screen" + (if (settings.tabletAspect == "fill") "" else " (${settings.tabletAspect})") +
-                "\nHover to move · touch to draw" +
-                "\n\nNo stylus? Tap the notch at the top › Fingers: draw (or move cursor)" +
-                "\nArea shape, eraser and toolbar are in the notch too"
+            val hint = t(R.string.pen_area_pc_screen) + (if (settings.tabletAspect == "fill") "" else " (${settings.tabletAspect})") +
+                t(R.string.hover_to_move_touch_to_draw_no_stylus_tap)
             val maxW = (width - 48 * d).toInt().coerceAtLeast(80)
             val key = "$hint|$maxW|${c.text}"
             if (key != hintKey) {
