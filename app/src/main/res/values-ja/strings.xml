@@ -27,14 +27,11 @@
     <string name="iso_extra_key">%1$s（ISO 追加キー）</string>
     <string name="delete_named">「%1$s」を削除しますか？</string>
     <string name="step_n">ステップ %1$d</string>
-    <string name="imported_n_layouts">%1$d 件のレイアウトをインポートしました</string>
-    <string name="layout_summary">%1$d 項目 · %2$d 列</string>
     <string name="layout_summary_landscape">" · 横向き"</string>
     <string name="share_layout_subject">BT Control レイアウト: %1$s</string>
     <string name="vibrates_at">%1$d 分で振動</string>
     <string name="suffix_nothing">なし</string>
     <string name="then_suffix">続けて: %1$s</string>
-    <string name="descriptor_bytes">HID レポート記述子: %1$d バイト。</string>
     <string name="pen_area_x">ペン領域: %1$s</string>
     <string name="whole_screen">画面全体</string>
     <string name="fingers_x">指: %1$s</string>
@@ -42,7 +39,6 @@
     <string name="finger_ignored">無視</string>
     <string name="could_not_connect_to">%1$s に接続できませんでした。</string>
     <string name="action_type_text">「%1$s」を入力</string>
-    <string name="action_macro_steps">マクロ（%1$d ステップ）</string>
     <string name="language">言語</string>
     <string name="language_summary_system">アプリの言語は Android の設定で変更できます</string>
     <string name="language_summary_old">スマートフォンの言語に合わせる</string>
@@ -398,4 +394,19 @@
     <string name="pan">パン</string>
     <string name="size">サイズ −</string>
     <string name="size_2">サイズ +</string>
+    <plurals name="imported_layouts">
+        <item quantity="other">%1$d 件のレイアウトをインポートしました</item>
+    </plurals>
+    <plurals name="layout_items">
+        <item quantity="other">%1$d 項目</item>
+    </plurals>
+    <plurals name="layout_columns">
+        <item quantity="other">%1$d 列</item>
+    </plurals>
+    <plurals name="descriptor_bytes">
+        <item quantity="other">HID レポート記述子: %1$d バイト。</item>
+    </plurals>
+    <plurals name="macro_steps">
+        <item quantity="other">マクロ（%1$d ステップ）</item>
+    </plurals>
 </resources>

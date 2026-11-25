@@ -27,14 +27,11 @@
     <string name="iso_extra_key">%1$s (zusätzliche ISO-Taste)</string>
     <string name="delete_named">„%1$s“ löschen?</string>
     <string name="step_n">Schritt %1$d</string>
-    <string name="imported_n_layouts">%1$d Layout(s) importiert</string>
-    <string name="layout_summary">%1$d Elemente · %2$d Spalten</string>
     <string name="layout_summary_landscape">" · Querformat"</string>
     <string name="share_layout_subject">BT-Control-Layout: %1$s</string>
     <string name="vibrates_at">Vibriert nach %1$d Min.</string>
     <string name="suffix_nothing">nichts</string>
     <string name="then_suffix">Danach: %1$s</string>
-    <string name="descriptor_bytes">HID-Berichtsdeskriptor: %1$d Bytes.</string>
     <string name="pen_area_x">Stiftbereich: %1$s</string>
     <string name="whole_screen">ganzer Bildschirm</string>
     <string name="fingers_x">Finger: %1$s</string>
@@ -42,7 +39,6 @@
     <string name="finger_ignored">ignoriert</string>
     <string name="could_not_connect_to">Verbindung mit %1$s konnte nicht hergestellt werden.</string>
     <string name="action_type_text">„%1$s“ tippen</string>
-    <string name="action_macro_steps">Makro (%1$d Schritte)</string>
     <string name="language">Sprache</string>
     <string name="language_summary_system">App-Sprache in den Android-Einstellungen ändern</string>
     <string name="language_summary_old">Folgt der Sprache des Telefons</string>
@@ -398,4 +394,24 @@
     <string name="pan">Verschieben</string>
     <string name="size">Größe −</string>
     <string name="size_2">Größe +</string>
+    <plurals name="imported_layouts">
+        <item quantity="one">%1$d Layout importiert</item>
+        <item quantity="other">%1$d Layouts importiert</item>
+    </plurals>
+    <plurals name="layout_items">
+        <item quantity="one">%1$d Element</item>
+        <item quantity="other">%1$d Elemente</item>
+    </plurals>
+    <plurals name="layout_columns">
+        <item quantity="one">%1$d Spalte</item>
+        <item quantity="other">%1$d Spalten</item>
+    </plurals>
+    <plurals name="descriptor_bytes">
+        <item quantity="one">HID-Berichtsdeskriptor: %1$d Byte.</item>
+        <item quantity="other">HID-Berichtsdeskriptor: %1$d Bytes.</item>
+    </plurals>
+    <plurals name="macro_steps">
+        <item quantity="one">Makro (%1$d Schritt)</item>
+        <item quantity="other">Makro (%1$d Schritte)</item>
+    </plurals>
 </resources>

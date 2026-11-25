@@ -27,14 +27,11 @@
     <string name="iso_extra_key">%1$s (tombol ekstra ISO)</string>
     <string name="delete_named">Hapus “%1$s”?</string>
     <string name="step_n">Langkah %1$d</string>
-    <string name="imported_n_layouts">%1$d tata letak diimpor</string>
-    <string name="layout_summary">%1$d item · %2$d kolom</string>
     <string name="layout_summary_landscape">" · lanskap"</string>
     <string name="share_layout_subject">Tata letak BT Control: %1$s</string>
     <string name="vibrates_at">Bergetar pada menit ke-%1$d</string>
     <string name="suffix_nothing">tidak ada</string>
     <string name="then_suffix">Lalu: %1$s</string>
-    <string name="descriptor_bytes">Deskriptor laporan HID: %1$d byte.</string>
     <string name="pen_area_x">Area pena: %1$s</string>
     <string name="whole_screen">seluruh layar</string>
     <string name="fingers_x">Jari: %1$s</string>
@@ -42,7 +39,6 @@
     <string name="finger_ignored">diabaikan</string>
     <string name="could_not_connect_to">Tidak dapat memulai koneksi ke %1$s.</string>
     <string name="action_type_text">Ketik “%1$s”</string>
-    <string name="action_macro_steps">Makro (%1$d langkah)</string>
     <string name="language">Bahasa</string>
     <string name="language_summary_system">Ubah bahasa aplikasi di setelan Android</string>
     <string name="language_summary_old">Mengikuti bahasa ponsel</string>
@@ -398,4 +394,19 @@
     <string name="pan">Geser</string>
     <string name="size">Ukuran −</string>
     <string name="size_2">Ukuran +</string>
+    <plurals name="imported_layouts">
+        <item quantity="other">%1$d tata letak diimpor</item>
+    </plurals>
+    <plurals name="layout_items">
+        <item quantity="other">%1$d item</item>
+    </plurals>
+    <plurals name="layout_columns">
+        <item quantity="other">%1$d kolom</item>
+    </plurals>
+    <plurals name="descriptor_bytes">
+        <item quantity="other">Deskriptor laporan HID: %1$d byte.</item>
+    </plurals>
+    <plurals name="macro_steps">
+        <item quantity="other">Makro (%1$d langkah)</item>
+    </plurals>
 </resources>

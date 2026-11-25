@@ -27,14 +27,11 @@
     <string name="iso_extra_key">%1$s (доп. клавиша ISO)</string>
     <string name="delete_named">Удалить «%1$s»?</string>
     <string name="step_n">Шаг %1$d</string>
-    <string name="imported_n_layouts">Импортировано раскладок: %1$d</string>
-    <string name="layout_summary">Элементов: %1$d · столбцов: %2$d</string>
     <string name="layout_summary_landscape">" · альбомная"</string>
     <string name="share_layout_subject">Раскладка BT Control: %1$s</string>
     <string name="vibrates_at">Вибрация через %1$d мин</string>
     <string name="suffix_nothing">ничего</string>
     <string name="then_suffix">Затем: %1$s</string>
-    <string name="descriptor_bytes">Дескриптор HID: %1$d байт.</string>
     <string name="pen_area_x">Область пера: %1$s</string>
     <string name="whole_screen">весь экран</string>
     <string name="fingers_x">Пальцы: %1$s</string>
@@ -42,7 +39,6 @@
     <string name="finger_ignored">игнорируются</string>
     <string name="could_not_connect_to">Не удалось подключиться к %1$s.</string>
     <string name="action_type_text">Ввести «%1$s»</string>
-    <string name="action_macro_steps">Макрос (шагов: %1$d)</string>
     <string name="language">Язык</string>
     <string name="language_summary_system">Измените язык приложения в настройках Android</string>
     <string name="language_summary_old">Как на телефоне</string>
@@ -398,4 +394,34 @@
     <string name="pan">Сдвиг</string>
     <string name="size">Размер −</string>
     <string name="size_2">Размер +</string>
+    <plurals name="imported_layouts">
+        <item quantity="one">Импортирована %1$d раскладка</item>
+        <item quantity="few">Импортировано %1$d раскладки</item>
+        <item quantity="many">Импортировано %1$d раскладок</item>
+        <item quantity="other">Импортировано %1$d раскладки</item>
+    </plurals>
+    <plurals name="layout_items">
+        <item quantity="one">%1$d элемент</item>
+        <item quantity="few">%1$d элемента</item>
+        <item quantity="many">%1$d элементов</item>
+        <item quantity="other">%1$d элемента</item>
+    </plurals>
+    <plurals name="layout_columns">
+        <item quantity="one">%1$d столбец</item>
+        <item quantity="few">%1$d столбца</item>
+        <item quantity="many">%1$d столбцов</item>
+        <item quantity="other">%1$d столбца</item>
+    </plurals>
+    <plurals name="descriptor_bytes">
+        <item quantity="one">Дескриптор HID: %1$d байт.</item>
+        <item quantity="few">Дескриптор HID: %1$d байта.</item>
+        <item quantity="many">Дескриптор HID: %1$d байт.</item>
+        <item quantity="other">Дескриптор HID: %1$d байта.</item>
+    </plurals>
+    <plurals name="macro_steps">
+        <item quantity="one">Макрос (%1$d шаг)</item>
+        <item quantity="few">Макрос (%1$d шага)</item>
+        <item quantity="many">Макрос (%1$d шагов)</item>
+        <item quantity="other">Макрос (%1$d шага)</item>
+    </plurals>
 </resources>

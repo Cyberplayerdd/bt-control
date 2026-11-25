@@ -27,14 +27,11 @@
     <string name="iso_extra_key">%1$s（ISO 额外键）</string>
     <string name="delete_named">删除“%1$s”？</string>
     <string name="step_n">第 %1$d 步</string>
-    <string name="imported_n_layouts">已导入 %1$d 个布局</string>
-    <string name="layout_summary">%1$d 项 · %2$d 列</string>
     <string name="layout_summary_landscape">" · 横屏"</string>
     <string name="share_layout_subject">BT Control 布局：%1$s</string>
     <string name="vibrates_at">%1$d 分钟时振动</string>
     <string name="suffix_nothing">无</string>
     <string name="then_suffix">之后：%1$s</string>
-    <string name="descriptor_bytes">HID 报告描述符：%1$d 字节。</string>
     <string name="pen_area_x">笔区域：%1$s</string>
     <string name="whole_screen">整个屏幕</string>
     <string name="fingers_x">手指：%1$s</string>
@@ -42,7 +39,6 @@
     <string name="finger_ignored">忽略</string>
     <string name="could_not_connect_to">无法连接到 %1$s。</string>
     <string name="action_type_text">输入“%1$s”</string>
-    <string name="action_macro_steps">宏（%1$d 步）</string>
     <string name="language">语言</string>
     <string name="language_summary_system">在 Android 设置中更改应用语言</string>
     <string name="language_summary_old">跟随手机语言</string>
@@ -398,4 +394,19 @@
     <string name="pan">平移</string>
     <string name="size">大小 −</string>
     <string name="size_2">大小 +</string>
+    <plurals name="imported_layouts">
+        <item quantity="other">已导入 %1$d 个布局</item>
+    </plurals>
+    <plurals name="layout_items">
+        <item quantity="other">%1$d 项</item>
+    </plurals>
+    <plurals name="layout_columns">
+        <item quantity="other">%1$d 列</item>
+    </plurals>
+    <plurals name="descriptor_bytes">
+        <item quantity="other">HID 报告描述符：%1$d 字节。</item>
+    </plurals>
+    <plurals name="macro_steps">
+        <item quantity="other">宏（%1$d 步）</item>
+    </plurals>
 </resources>

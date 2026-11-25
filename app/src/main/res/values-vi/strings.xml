@@ -27,14 +27,11 @@
     <string name="iso_extra_key">%1$s (phím ISO bổ sung)</string>
     <string name="delete_named">Xóa “%1$s”?</string>
     <string name="step_n">Bước %1$d</string>
-    <string name="imported_n_layouts">Đã nhập %1$d bố cục</string>
-    <string name="layout_summary">%1$d mục · %2$d cột</string>
     <string name="layout_summary_landscape">" · ngang"</string>
     <string name="share_layout_subject">Bố cục BT Control: %1$s</string>
     <string name="vibrates_at">Rung ở phút thứ %1$d</string>
     <string name="suffix_nothing">không làm gì</string>
     <string name="then_suffix">Sau đó: %1$s</string>
-    <string name="descriptor_bytes">Bộ mô tả báo cáo HID: %1$d byte.</string>
     <string name="pen_area_x">Vùng bút: %1$s</string>
     <string name="whole_screen">toàn màn hình</string>
     <string name="fingers_x">Ngón tay: %1$s</string>
@@ -42,7 +39,6 @@
     <string name="finger_ignored">bỏ qua</string>
     <string name="could_not_connect_to">Không thể bắt đầu kết nối với %1$s.</string>
     <string name="action_type_text">Gõ “%1$s”</string>
-    <string name="action_macro_steps">Macro (%1$d bước)</string>
     <string name="language">Ngôn ngữ</string>
     <string name="language_summary_system">Đổi ngôn ngữ ứng dụng trong cài đặt Android</string>
     <string name="language_summary_old">Theo ngôn ngữ của điện thoại</string>
@@ -398,4 +394,19 @@
     <string name="pan">Kéo</string>
     <string name="size">Cỡ −</string>
     <string name="size_2">Cỡ +</string>
+    <plurals name="imported_layouts">
+        <item quantity="other">Đã nhập %1$d bố cục</item>
+    </plurals>
+    <plurals name="layout_items">
+        <item quantity="other">%1$d mục</item>
+    </plurals>
+    <plurals name="layout_columns">
+        <item quantity="other">%1$d cột</item>
+    </plurals>
+    <plurals name="descriptor_bytes">
+        <item quantity="other">Bộ mô tả báo cáo HID: %1$d byte.</item>
+    </plurals>
+    <plurals name="macro_steps">
+        <item quantity="other">Macro (%1$d bước)</item>
+    </plurals>
 </resources>

@@ -27,14 +27,11 @@
     <string name="iso_extra_key">%1$s(ISO 추가 키)</string>
     <string name="delete_named">\'%1$s\'을(를) 삭제할까요?</string>
     <string name="step_n">%1$d단계</string>
-    <string name="imported_n_layouts">레이아웃 %1$d개를 가져왔습니다</string>
-    <string name="layout_summary">항목 %1$d개 · 열 %2$d개</string>
     <string name="layout_summary_landscape">" · 가로"</string>
     <string name="share_layout_subject">BT Control 레이아웃: %1$s</string>
     <string name="vibrates_at">%1$d분에 진동</string>
     <string name="suffix_nothing">없음</string>
     <string name="then_suffix">그다음: %1$s</string>
-    <string name="descriptor_bytes">HID 보고서 설명자: %1$d바이트</string>
     <string name="pen_area_x">펜 영역: %1$s</string>
     <string name="whole_screen">전체 화면</string>
     <string name="fingers_x">손가락: %1$s</string>
@@ -42,7 +39,6 @@
     <string name="finger_ignored">무시</string>
     <string name="could_not_connect_to">%1$s에 연결할 수 없습니다.</string>
     <string name="action_type_text">\'%1$s\' 입력</string>
-    <string name="action_macro_steps">매크로(%1$d단계)</string>
     <string name="language">언어</string>
     <string name="language_summary_system">앱 언어는 Android 설정에서 변경하세요</string>
     <string name="language_summary_old">휴대전화 언어를 따름</string>
@@ -398,4 +394,19 @@
     <string name="pan">이동</string>
     <string name="size">크기 −</string>
     <string name="size_2">크기 +</string>
+    <plurals name="imported_layouts">
+        <item quantity="other">레이아웃 %1$d개를 가져왔습니다</item>
+    </plurals>
+    <plurals name="layout_items">
+        <item quantity="other">항목 %1$d개</item>
+    </plurals>
+    <plurals name="layout_columns">
+        <item quantity="other">열 %1$d개</item>
+    </plurals>
+    <plurals name="descriptor_bytes">
+        <item quantity="other">HID 보고서 설명자: %1$d바이트</item>
+    </plurals>
+    <plurals name="macro_steps">
+        <item quantity="other">매크로(%1$d단계)</item>
+    </plurals>
 </resources>

@@ -27,14 +27,11 @@
     <string name="iso_extra_key">%1$s (extra ISO-toets)</string>
     <string name="delete_named">‘%1$s’ verwijderen?</string>
     <string name="step_n">Stap %1$d</string>
-    <string name="imported_n_layouts">%1$d indeling(en) geïmporteerd</string>
-    <string name="layout_summary">%1$d items · %2$d kolommen</string>
     <string name="layout_summary_landscape">" · liggend"</string>
     <string name="share_layout_subject">BT Control-indeling: %1$s</string>
     <string name="vibrates_at">Trilt na %1$d min</string>
     <string name="suffix_nothing">niets</string>
     <string name="then_suffix">Daarna: %1$s</string>
-    <string name="descriptor_bytes">HID-descriptor: %1$d bytes.</string>
     <string name="pen_area_x">Pengebied: %1$s</string>
     <string name="whole_screen">hele scherm</string>
     <string name="fingers_x">Vingers: %1$s</string>
@@ -42,7 +39,6 @@
     <string name="finger_ignored">genegeerd</string>
     <string name="could_not_connect_to">Kan geen verbinding maken met %1$s.</string>
     <string name="action_type_text">‘%1$s’ typen</string>
-    <string name="action_macro_steps">Macro (%1$d stappen)</string>
     <string name="language">Taal</string>
     <string name="language_summary_system">Wijzig de app-taal in de Android-instellingen</string>
     <string name="language_summary_old">Volgt de taal van de telefoon</string>
@@ -398,4 +394,24 @@
     <string name="pan">Pannen</string>
     <string name="size">Grootte −</string>
     <string name="size_2">Grootte +</string>
+    <plurals name="imported_layouts">
+        <item quantity="one">%1$d indeling geïmporteerd</item>
+        <item quantity="other">%1$d indelingen geïmporteerd</item>
+    </plurals>
+    <plurals name="layout_items">
+        <item quantity="one">%1$d item</item>
+        <item quantity="other">%1$d items</item>
+    </plurals>
+    <plurals name="layout_columns">
+        <item quantity="one">%1$d kolom</item>
+        <item quantity="other">%1$d kolommen</item>
+    </plurals>
+    <plurals name="descriptor_bytes">
+        <item quantity="one">HID-descriptor: %1$d byte.</item>
+        <item quantity="other">HID-descriptor: %1$d bytes.</item>
+    </plurals>
+    <plurals name="macro_steps">
+        <item quantity="one">Macro (%1$d stap)</item>
+        <item quantity="other">Macro (%1$d stappen)</item>
+    </plurals>
 </resources>

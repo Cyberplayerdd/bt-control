@@ -2,6 +2,7 @@ package com.btcontrol.app.ui.screens
 
 import com.btcontrol.app.R
 import com.btcontrol.app.t
+import com.btcontrol.app.tq
 import android.content.Intent
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -67,7 +68,7 @@ fun ManageLayoutsScreen(onOpen: (String) -> Unit, onEdit: (String) -> Unit) {
         runCatching {
             val text = context.contentResolver.openInputStream(uri)!!.bufferedReader().use { it.readText() }
             repo.importJson(text)
-        }.onSuccess { toast(t(R.string.imported_n_layouts, it)) }.onFailure { toast(t(R.string.not_a_valid_layout_file)) }
+        }.onSuccess { toast(tq(R.plurals.imported_layouts, it)) }.onFailure { toast(t(R.string.not_a_valid_layout_file)) }
     }
     val exportLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
         if (uri == null) return@rememberLauncherForActivityResult
@@ -86,7 +87,7 @@ fun ManageLayoutsScreen(onOpen: (String) -> Unit, onEdit: (String) -> Unit) {
     }
     if (paste) PasteImportDialog(onDismiss = { paste = false }) { text ->
         runCatching { repo.importJson(text) }
-            .onSuccess { toast(t(R.string.imported_n_layouts, it)); paste = false }
+            .onSuccess { toast(tq(R.plurals.imported_layouts, it)); paste = false }
             .onFailure { toast(t(R.string.not_a_valid_layout)) }
     }
 
@@ -112,7 +113,7 @@ fun ManageLayoutsScreen(onOpen: (String) -> Unit, onEdit: (String) -> Unit) {
                     Column(Modifier.weight(1f)) {
                         Text(l.name, style = MaterialTheme.typography.titleMedium)
                         Text(
-                            t(R.string.layout_summary, l.items.size, l.columns) + if (l.landscape) t(R.string.layout_summary_landscape) else "",
+                            tq(R.plurals.layout_items, l.items.size) + " · " + tq(R.plurals.layout_columns, l.columns) + if (l.landscape) t(R.string.layout_summary_landscape) else "",
                             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }

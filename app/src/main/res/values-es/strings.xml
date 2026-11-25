@@ -27,14 +27,11 @@
     <string name="iso_extra_key">%1$s (tecla ISO extra)</string>
     <string name="delete_named">¿Eliminar «%1$s»?</string>
     <string name="step_n">Paso %1$d</string>
-    <string name="imported_n_layouts">%1$d diseño(s) importado(s)</string>
-    <string name="layout_summary">%1$d elementos · %2$d columnas</string>
     <string name="layout_summary_landscape">" · horizontal"</string>
     <string name="share_layout_subject">Diseño de BT Control: %1$s</string>
     <string name="vibrates_at">Vibra a los %1$d min</string>
     <string name="suffix_nothing">nada</string>
     <string name="then_suffix">Después: %1$s</string>
-    <string name="descriptor_bytes">Descriptor HID: %1$d bytes.</string>
     <string name="pen_area_x">Zona del lápiz: %1$s</string>
     <string name="whole_screen">pantalla completa</string>
     <string name="fingers_x">Dedos: %1$s</string>
@@ -42,7 +39,6 @@
     <string name="finger_ignored">ignorados</string>
     <string name="could_not_connect_to">No se pudo conectar con %1$s.</string>
     <string name="action_type_text">Escribir «%1$s»</string>
-    <string name="action_macro_steps">Macro (%1$d pasos)</string>
     <string name="language">Idioma</string>
     <string name="language_summary_system">Cambia el idioma de la app en los ajustes de Android</string>
     <string name="language_summary_old">Sigue el idioma del teléfono</string>
@@ -398,4 +394,29 @@
     <string name="pan">Mover</string>
     <string name="size">Tamaño −</string>
     <string name="size_2">Tamaño +</string>
+    <plurals name="imported_layouts">
+        <item quantity="one">%1$d diseño importado</item>
+        <item quantity="many">%1$d diseños importados</item>
+        <item quantity="other">%1$d diseños importados</item>
+    </plurals>
+    <plurals name="layout_items">
+        <item quantity="one">%1$d elemento</item>
+        <item quantity="many">%1$d elementos</item>
+        <item quantity="other">%1$d elementos</item>
+    </plurals>
+    <plurals name="layout_columns">
+        <item quantity="one">%1$d columna</item>
+        <item quantity="many">%1$d columnas</item>
+        <item quantity="other">%1$d columnas</item>
+    </plurals>
+    <plurals name="descriptor_bytes">
+        <item quantity="one">Descriptor HID: %1$d byte.</item>
+        <item quantity="many">Descriptor HID: %1$d bytes.</item>
+        <item quantity="other">Descriptor HID: %1$d bytes.</item>
+    </plurals>
+    <plurals name="macro_steps">
+        <item quantity="one">Macro (%1$d paso)</item>
+        <item quantity="many">Macro (%1$d pasos)</item>
+        <item quantity="other">Macro (%1$d pasos)</item>
+    </plurals>
 </resources>

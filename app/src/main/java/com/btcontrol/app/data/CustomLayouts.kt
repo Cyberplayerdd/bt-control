@@ -2,6 +2,7 @@ package com.btcontrol.app.data
 
 import com.btcontrol.app.R
 import com.btcontrol.app.t
+import com.btcontrol.app.tq
 import android.content.Context
 import com.btcontrol.app.hid.Consumer
 import com.btcontrol.app.hid.HidController
@@ -43,7 +44,7 @@ data class ButtonAction(
         ActionType.MEDIA -> Consumer.NAMES[usage] ?: "Media 0x%X".format(usage)
         ActionType.MOUSE -> MouseButton.NAMES[usage] ?: t(R.string.mouse)
         ActionType.SYSTEM -> when (usage) { 1 -> t(R.string.power); 2 -> t(R.string.sleep); else -> t(R.string.wake) }
-        ActionType.MACRO -> t(R.string.action_macro_steps, steps.size)
+        ActionType.MACRO -> tq(R.plurals.macro_steps, steps.size)
     }
 
     companion object {

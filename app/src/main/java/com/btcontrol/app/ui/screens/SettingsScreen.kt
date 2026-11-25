@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.clickable
 import com.btcontrol.app.R
 import com.btcontrol.app.t
+import com.btcontrol.app.tq
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -157,7 +158,7 @@ fun SettingsScreen() {
         SectionHeader(t(R.string.about))
         Text(
             t(R.string.bt_control_1_0_bluetooth_hid_keyboard_mous) +
-                t(R.string.descriptor_bytes, HidDescriptor.DESCRIPTOR.size),
+                tq(R.plurals.descriptor_bytes, HidDescriptor.DESCRIPTOR.size),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(horizontal = 16.dp),

@@ -27,14 +27,11 @@
     <string name="iso_extra_key">%1$s (επιπλέον πλήκτρο ISO)</string>
     <string name="delete_named">Διαγραφή «%1$s»;</string>
     <string name="step_n">Βήμα %1$d</string>
-    <string name="imported_n_layouts">Εισήχθησαν %1$d διατάξεις</string>
-    <string name="layout_summary">%1$d στοιχεία · %2$d στήλες</string>
     <string name="layout_summary_landscape">" · οριζόντια"</string>
     <string name="share_layout_subject">Διάταξη BT Control: %1$s</string>
     <string name="vibrates_at">Δόνηση στα %1$d λεπτά</string>
     <string name="suffix_nothing">τίποτα</string>
     <string name="then_suffix">Μετά: %1$s</string>
-    <string name="descriptor_bytes">Περιγραφέας HID: %1$d byte.</string>
     <string name="pen_area_x">Περιοχή γραφίδας: %1$s</string>
     <string name="whole_screen">όλη η οθόνη</string>
     <string name="fingers_x">Δάχτυλα: %1$s</string>
@@ -42,7 +39,6 @@
     <string name="finger_ignored">αγνοούνται</string>
     <string name="could_not_connect_to">Δεν ήταν δυνατή η σύνδεση με %1$s.</string>
     <string name="action_type_text">Πληκτρολόγηση «%1$s»</string>
-    <string name="action_macro_steps">Μακροεντολή (%1$d βήματα)</string>
     <string name="language">Γλώσσα</string>
     <string name="language_summary_system">Αλλάξτε τη γλώσσα της εφαρμογής στις ρυθμίσεις του Android</string>
     <string name="language_summary_old">Ακολουθεί τη γλώσσα του τηλεφώνου</string>
@@ -398,4 +394,24 @@
     <string name="pan">Μετακίνηση</string>
     <string name="size">Μέγεθος −</string>
     <string name="size_2">Μέγεθος +</string>
+    <plurals name="imported_layouts">
+        <item quantity="one">Εισήχθη %1$d διάταξη</item>
+        <item quantity="other">Εισήχθησαν %1$d διατάξεις</item>
+    </plurals>
+    <plurals name="layout_items">
+        <item quantity="one">%1$d στοιχείο</item>
+        <item quantity="other">%1$d στοιχεία</item>
+    </plurals>
+    <plurals name="layout_columns">
+        <item quantity="one">%1$d στήλη</item>
+        <item quantity="other">%1$d στήλες</item>
+    </plurals>
+    <plurals name="descriptor_bytes">
+        <item quantity="one">Περιγραφέας HID: %1$d byte.</item>
+        <item quantity="other">Περιγραφέας HID: %1$d byte.</item>
+    </plurals>
+    <plurals name="macro_steps">
+        <item quantity="one">Μακροεντολή (%1$d βήμα)</item>
+        <item quantity="other">Μακροεντολή (%1$d βήματα)</item>
+    </plurals>
 </resources>

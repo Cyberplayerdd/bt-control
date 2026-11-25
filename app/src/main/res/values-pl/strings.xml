@@ -27,14 +27,11 @@
     <string name="iso_extra_key">%1$s (dodatkowy klawisz ISO)</string>
     <string name="delete_named">Usunąć „%1$s”?</string>
     <string name="step_n">Krok %1$d</string>
-    <string name="imported_n_layouts">Zaimportowano układy: %1$d</string>
-    <string name="layout_summary">Elementy: %1$d · kolumny: %2$d</string>
     <string name="layout_summary_landscape">" · poziomo"</string>
     <string name="share_layout_subject">Układ BT Control: %1$s</string>
     <string name="vibrates_at">Wibracja po %1$d min</string>
     <string name="suffix_nothing">nic</string>
     <string name="then_suffix">Potem: %1$s</string>
-    <string name="descriptor_bytes">Deskryptor HID: %1$d B.</string>
     <string name="pen_area_x">Obszar pióra: %1$s</string>
     <string name="whole_screen">cały ekran</string>
     <string name="fingers_x">Palce: %1$s</string>
@@ -42,7 +39,6 @@
     <string name="finger_ignored">ignorowane</string>
     <string name="could_not_connect_to">Nie udało się połączyć z %1$s.</string>
     <string name="action_type_text">Wpisz „%1$s”</string>
-    <string name="action_macro_steps">Makro (kroki: %1$d)</string>
     <string name="language">Język</string>
     <string name="language_summary_system">Zmień język aplikacji w ustawieniach Androida</string>
     <string name="language_summary_old">Zgodnie z językiem telefonu</string>
@@ -398,4 +394,34 @@
     <string name="pan">Przesuń</string>
     <string name="size">Rozmiar −</string>
     <string name="size_2">Rozmiar +</string>
+    <plurals name="imported_layouts">
+        <item quantity="one">Zaimportowano %1$d układ</item>
+        <item quantity="few">Zaimportowano %1$d układy</item>
+        <item quantity="many">Zaimportowano %1$d układów</item>
+        <item quantity="other">Zaimportowano %1$d układu</item>
+    </plurals>
+    <plurals name="layout_items">
+        <item quantity="one">%1$d element</item>
+        <item quantity="few">%1$d elementy</item>
+        <item quantity="many">%1$d elementów</item>
+        <item quantity="other">%1$d elementu</item>
+    </plurals>
+    <plurals name="layout_columns">
+        <item quantity="one">%1$d kolumna</item>
+        <item quantity="few">%1$d kolumny</item>
+        <item quantity="many">%1$d kolumn</item>
+        <item quantity="other">%1$d kolumny</item>
+    </plurals>
+    <plurals name="descriptor_bytes">
+        <item quantity="one">Deskryptor HID: %1$d bajt.</item>
+        <item quantity="few">Deskryptor HID: %1$d bajty.</item>
+        <item quantity="many">Deskryptor HID: %1$d bajtów.</item>
+        <item quantity="other">Deskryptor HID: %1$d bajta.</item>
+    </plurals>
+    <plurals name="macro_steps">
+        <item quantity="one">Makro (%1$d krok)</item>
+        <item quantity="few">Makro (%1$d kroki)</item>
+        <item quantity="many">Makro (%1$d kroków)</item>
+        <item quantity="other">Makro (%1$d kroku)</item>
+    </plurals>
 </resources>

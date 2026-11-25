@@ -27,14 +27,11 @@
     <string name="iso_extra_key">%1$s (ek ISO tuşu)</string>
     <string name="delete_named">“%1$s” silinsin mi?</string>
     <string name="step_n">Adım %1$d</string>
-    <string name="imported_n_layouts">%1$d düzen içe aktarıldı</string>
-    <string name="layout_summary">%1$d öğe · %2$d sütun</string>
     <string name="layout_summary_landscape">" · yatay"</string>
     <string name="share_layout_subject">BT Control düzeni: %1$s</string>
     <string name="vibrates_at">%1$d dk sonra titrer</string>
     <string name="suffix_nothing">hiçbir şey</string>
     <string name="then_suffix">Sonra: %1$s</string>
-    <string name="descriptor_bytes">HID rapor tanımlayıcısı: %1$d bayt.</string>
     <string name="pen_area_x">Kalem alanı: %1$s</string>
     <string name="whole_screen">tüm ekran</string>
     <string name="fingers_x">Parmaklar: %1$s</string>
@@ -42,7 +39,6 @@
     <string name="finger_ignored">yok sayılır</string>
     <string name="could_not_connect_to">%1$s ile bağlantı kurulamadı.</string>
     <string name="action_type_text">“%1$s” yaz</string>
-    <string name="action_macro_steps">Makro (%1$d adım)</string>
     <string name="language">Dil</string>
     <string name="language_summary_system">Uygulama dilini Android ayarlarından değiştirin</string>
     <string name="language_summary_old">Telefonun dilini kullanır</string>
@@ -398,4 +394,24 @@
     <string name="pan">Kaydır</string>
     <string name="size">Boyut −</string>
     <string name="size_2">Boyut +</string>
+    <plurals name="imported_layouts">
+        <item quantity="one">%1$d düzen içe aktarıldı</item>
+        <item quantity="other">%1$d düzen içe aktarıldı</item>
+    </plurals>
+    <plurals name="layout_items">
+        <item quantity="one">%1$d öğe</item>
+        <item quantity="other">%1$d öğe</item>
+    </plurals>
+    <plurals name="layout_columns">
+        <item quantity="one">%1$d sütun</item>
+        <item quantity="other">%1$d sütun</item>
+    </plurals>
+    <plurals name="descriptor_bytes">
+        <item quantity="one">HID rapor tanımlayıcısı: %1$d bayt.</item>
+        <item quantity="other">HID rapor tanımlayıcısı: %1$d bayt.</item>
+    </plurals>
+    <plurals name="macro_steps">
+        <item quantity="one">Makro (%1$d adım)</item>
+        <item quantity="other">Makro (%1$d adım)</item>
+    </plurals>
 </resources>

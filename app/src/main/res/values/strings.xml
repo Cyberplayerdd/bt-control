@@ -28,14 +28,11 @@
     <string name="iso_extra_key">%1$s (ISO extra key)</string>
     <string name="delete_named">Delete “%1$s”?</string>
     <string name="step_n">Step %1$d</string>
-    <string name="imported_n_layouts">Imported %1$d layout(s)</string>
-    <string name="layout_summary">%1$d items · %2$d columns</string>
     <string name="layout_summary_landscape">" · landscape"</string>
     <string name="share_layout_subject">BT Control layout: %1$s</string>
     <string name="vibrates_at">Vibrates at %1$d min</string>
     <string name="suffix_nothing">nothing</string>
     <string name="then_suffix">Then: %1$s</string>
-    <string name="descriptor_bytes">HID report descriptor: %1$d bytes.</string>
     <string name="pen_area_x">Pen area: %1$s</string>
     <string name="whole_screen">whole screen</string>
     <string name="fingers_x">Fingers: %1$s</string>
@@ -43,7 +40,6 @@
     <string name="finger_ignored">ignored</string>
     <string name="could_not_connect_to">Could not start a connection to %1$s.</string>
     <string name="action_type_text">Type “%1$s”</string>
-    <string name="action_macro_steps">Macro (%1$d steps)</string>
     <string name="language">Language</string>
     <string name="language_summary_system">Change the app language in Android\'s settings</string>
     <string name="language_summary_old">Follows the phone\'s language</string>
@@ -399,4 +395,24 @@
     <string name="pan">Pan</string>
     <string name="size">Size −</string>
     <string name="size_2">Size +</string>
+    <plurals name="imported_layouts">
+        <item quantity="one">Imported %1$d layout</item>
+        <item quantity="other">Imported %1$d layouts</item>
+    </plurals>
+    <plurals name="layout_items">
+        <item quantity="one">%1$d item</item>
+        <item quantity="other">%1$d items</item>
+    </plurals>
+    <plurals name="layout_columns">
+        <item quantity="one">%1$d column</item>
+        <item quantity="other">%1$d columns</item>
+    </plurals>
+    <plurals name="descriptor_bytes">
+        <item quantity="one">HID report descriptor: %1$d byte.</item>
+        <item quantity="other">HID report descriptor: %1$d bytes.</item>
+    </plurals>
+    <plurals name="macro_steps">
+        <item quantity="one">Macro (%1$d step)</item>
+        <item quantity="other">Macro (%1$d steps)</item>
+    </plurals>
 </resources>

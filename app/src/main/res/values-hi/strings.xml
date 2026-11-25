@@ -27,14 +27,11 @@
     <string name="iso_extra_key">%1$s (अतिरिक्त ISO कुंजी)</string>
     <string name="delete_named">“%1$s” हटाएँ?</string>
     <string name="step_n">चरण %1$d</string>
-    <string name="imported_n_layouts">%1$d लेआउट इंपोर्ट किए गए</string>
-    <string name="layout_summary">%1$d आइटम · %2$d कॉलम</string>
     <string name="layout_summary_landscape">" · लैंडस्केप"</string>
     <string name="share_layout_subject">BT Control लेआउट: %1$s</string>
     <string name="vibrates_at">%1$d मिनट पर वाइब्रेट</string>
     <string name="suffix_nothing">कुछ नहीं</string>
     <string name="then_suffix">फिर: %1$s</string>
-    <string name="descriptor_bytes">HID रिपोर्ट डिस्क्रिप्टर: %1$d बाइट।</string>
     <string name="pen_area_x">पेन क्षेत्र: %1$s</string>
     <string name="whole_screen">पूरी स्क्रीन</string>
     <string name="fingers_x">उंगलियाँ: %1$s</string>
@@ -42,7 +39,6 @@
     <string name="finger_ignored">अनदेखी</string>
     <string name="could_not_connect_to">%1$s से कनेक्ट नहीं हो सका।</string>
     <string name="action_type_text">“%1$s” टाइप करें</string>
-    <string name="action_macro_steps">मैक्रो (%1$d चरण)</string>
     <string name="language">भाषा</string>
     <string name="language_summary_system">ऐप की भाषा Android सेटिंग में बदलें</string>
     <string name="language_summary_old">फ़ोन की भाषा के अनुसार</string>
@@ -398,4 +394,24 @@
     <string name="pan">पैन</string>
     <string name="size">आकार −</string>
     <string name="size_2">आकार +</string>
+    <plurals name="imported_layouts">
+        <item quantity="one">%1$d लेआउट इंपोर्ट किया गया</item>
+        <item quantity="other">%1$d लेआउट इंपोर्ट किए गए</item>
+    </plurals>
+    <plurals name="layout_items">
+        <item quantity="one">%1$d आइटम</item>
+        <item quantity="other">%1$d आइटम</item>
+    </plurals>
+    <plurals name="layout_columns">
+        <item quantity="one">%1$d कॉलम</item>
+        <item quantity="other">%1$d कॉलम</item>
+    </plurals>
+    <plurals name="descriptor_bytes">
+        <item quantity="one">HID रिपोर्ट डिस्क्रिप्टर: %1$d बाइट।</item>
+        <item quantity="other">HID रिपोर्ट डिस्क्रिप्टर: %1$d बाइट।</item>
+    </plurals>
+    <plurals name="macro_steps">
+        <item quantity="one">मैक्रो (%1$d चरण)</item>
+        <item quantity="other">मैक्रो (%1$d चरण)</item>
+    </plurals>
 </resources>
